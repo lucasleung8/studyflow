@@ -20,27 +20,26 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University
 
 <body>
     <h1 id="greeting">Welcome, (name)!</h1>
+    <div id="taskFormContainer">
+        <h1 id="taskHeader">Tasks</h1>
+        <hr>
+        <div id="tasklist"></div>
+        <hr>
 
-
-    <h1>Tasks</h1>
-    <hr>
-    <div id="tasklist"></div>
-    <hr>
-
-
-    <h2>Create Task</h2>
-    <div id="createtask">
-        Name: <input id="taskName" name="taskName" type="text"><br>
-        Description: <input id="taskDesc" name="taskDesc" type="text"><br>
-        Course: <input id="course" name="course" type="text"><br>
-        Due Date: <input id="dueDate" name="dueDate" type="datetime-local"><br>
-        Priority: <select id="priority" name="priority">
-            <option value="1">Low</option>
-            <option value="2">Medium</option>
-            <option value="3">High</option>
-            <option value="4">URGENT</option>
-        </select><br>
-        <input id="taskSubmit" type="submit">
+        <h2 id="createTaskHeader">Create Task</h2>
+        <div id="createTask">
+            Name: <input id="taskName" name="taskName" type="text"><br>
+            Description: <input id="taskDesc" name="taskDesc" type="text"><br>
+            Course: <input id="course" name="course" type="text"><br>
+            Due Date: <input id="dueDate" name="dueDate" type="datetime-local"><br>
+            Priority: <select id="priority" name="priority">
+                <option value="1">Low</option>
+                <option value="2">Medium</option>
+                <option value="3">High</option>
+                <option value="4">URGENT</option>
+            </select><br>
+            <input id="taskSubmit" type="submit">
+        </div>
     </div>
     <div id="calendarContainer">
         <header id="calendarHeader">
