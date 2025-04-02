@@ -1,0 +1,52 @@
+#timerContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    background: var(--container-color);
+    width: 86%;
+    max-width: 650px;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding: 10px;
+    border: 3px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: 0 5px 30px var(--shadow-color);
+    color: var(--font-color);
+    align-items: center;
+    justify-content: center;
+}
+
+#timerHeader h2{
+    font-weight: 500;
+    font-size: 20px;
+}
+
+#timer {
+    padding: 5px;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+#timerButton {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 450;
+    font-size: 20px;
+    padding: 3px 10px 5px 10px;
+    color: var(--font-color);
+    background: var(--container-color);
+    border: 2px solid var(--border-color);
+    box-shadow: 0 1px 3px var(--shadow-color);
+    border-radius: 0.5em;
+}
+
+#timerButton:hover {
+    background: var(--button-hover-color);
+    box-shadow: 0 1px 3px var(--shadow-color);
+}
+
+#timerButton:active {
+    background: var(--button-active-color);
+    box-shadow: 0 0.5px 3px var(--shadow-color);
+}

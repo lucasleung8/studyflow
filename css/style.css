@@ -12,6 +12,7 @@ body {
     align-items: center;
     justify-content: center;
     transition: background 0.5s;
+    margin-bottom: 20px;
 }
 
 #greeting {
@@ -20,75 +21,4 @@ body {
     font-weight: 600;
     font-size: 40px;
     color: var(--font-color);
-}
-
-#taskFormContainer {
-    display: flex;
-    flex-direction: column;
-    background-color: var(--container-color);
-    width: 86%;
-    max-width: 650px;
-    padding: 10px;
-    border: 3px solid var(--border-color);
-    border-radius: 10px;
-    box-shadow: 0 5px 30px var(--shadow-color);
-    color: var(--font-color);
-    font-weight: 400;
-    font-size: 20px;
-    align-items: center;
-    justify-content: center;
-}
-
-#taskFormContainer hr {
-    width: 100%;
-    border: none;
-    border-top: 1px solid var(--font-color);
-  }
-
-#taskHeader {
-    font-weight: 500;
-    font-size: 40px;  
-    color: var(--font-color);
-}
-
-#createTaskHeader {
-    font-weight: 400;
-    font-size: 25px;  
-    color: var(--font-color);
-}
-
-#createTask {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.taskInput {
-    margin-bottom: 10px;
-}
-
-#taskSubmit {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    margin-top: 5px;
-    font-weight: 500;
-    font-size: 15px;
-    padding: 5px 8px 5px 8px;
-    color: var(--font-color);
-    background: var(--container-color);
-    border: 2px solid var(--border-color);
-    box-shadow: 0 1px 3px var(--shadow-color);
-    border-radius: 0.5em;
-}
-
-#taskSubmit:hover {
-    background: var(--button-hover-color);
-    box-shadow: 0 1px 3px var(--shadow-color);
-}
-
-#taskSubmit:active {
-    background: var(--button-active-color);
-    box-shadow: 0 0.5px 3px var(--shadow-color);
 }
