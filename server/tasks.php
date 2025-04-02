@@ -10,7 +10,7 @@ $user_id = filter_input(INPUT_POST, "userid", FILTER_VALIDATE_INT);
 
 $duedate_valid = DateTime::createFromFormat('Y-m-d\TH:i', $duedate) !== false;
 
-if ($name === null || $description === null || $course === null || !$duedate_valid || $priority === null || $user_id === null) {
+if (empty($name) || empty($description) || empty($course) || !$duedate_valid || $priority === null || $user_id === null) {
     header('Content-Type: application/json');
     echo json_encode(["error" => "Invalid input"]);
     exit;
@@ -23,7 +23,10 @@ try {
     $success = $stmt->execute($args);
 
     if ($success) {
-        $response = ["status" => "ok"];
+        $response = [
+            "status" => "ok",
+            "message" => "Task added successfully!"
+        ];
     } else {
         $response = ["error" => "Failed to execute query"];
     }
