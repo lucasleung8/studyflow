@@ -3,6 +3,8 @@ window.addEventListener("load", function (event) {
     let userID = 1;
     let taskSubmit = document.getElementById("taskSubmit");
     let createTask = document.getElementById("createTask");
+    let taskPopup = document.getElementById("taskPopup");
+    let overlay = document.getElementById("overlay");
 
     function taskAdded(feedback) {
         const feedbackElement = document.getElementById("taskFeedback");
@@ -16,7 +18,12 @@ window.addEventListener("load", function (event) {
     }
 
     createTask.addEventListener("click", function (event) {
-        document.getElementById("taskPopup").style["display"] = "flex";
+        taskPopup.style["display"] = "flex";
+        overlay.style["display"] = "block";
+        overlay.addEventListener("click", function (event) {
+            taskPopup.style["display"] = "none";
+            overlay.style["display"] = "none";
+        })
     }) 
 
     taskSubmit.addEventListener("click", function (event) {
