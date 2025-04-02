@@ -27,7 +27,7 @@
     font-size: 20px;
 }
 
-#timerButton {
+#timer_button {
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -41,12 +41,12 @@
     border-radius: 0.5em;
 }
 
-#timerButton:hover {
+#timer_button:hover {
     background: var(--button-hover-color);
     box-shadow: 0 1px 3px var(--shadow-color);
 }
 
-#timerButton:active {
+#timer_button:active {
     background: var(--button-active-color);
     box-shadow: 0 0.5px 3px var(--shadow-color);
 }
