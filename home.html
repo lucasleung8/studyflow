@@ -25,14 +25,17 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University
 
 <body>
     <h1 id="greeting">Welcome, (name)!</h1>
-    <div id="taskFormContainer">
+    <div class="taskFormContainer">
         <h1 id="taskHeader">Tasks</h1>
         <hr>
         <div id="tasklist"></div>
+        <input id="createTask" class="taskButton" type="button" value="Create Task">
         <hr>
+    </div>
 
-        <h2 id="createTaskHeader">Create Task</h2>
+    <div class="taskFormContainer" id="taskPopup">
         <div id="createTask">
+            <h2 id="createTaskHeader">Create Task</h2>
             Name: <input id="taskName" class="taskInput" name="taskName" type="text">
             Description: <input id="taskDesc" class="taskInput" name="taskDesc" type="text">
             Course: <input id="course" class="taskInput" name="course" type="text">
@@ -44,9 +47,12 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University
                 <option value="4">URGENT</option>
             </select>
             <span id="taskFeedback"></span>
-            <input id="taskSubmit" type="submit">
+            <input id="taskSubmit" class="taskButton" type="submit">
         </div>
     </div>
+
+
+    
 
     <div id="chartContainer" style="width: 50%;">
         <canvas id="chart"></canvas>

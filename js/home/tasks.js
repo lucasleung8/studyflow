@@ -1,6 +1,7 @@
 window.addEventListener("load", function (event) {
     // UserId set at 1 as a placeholder, will be from session after login is made
     let userID = 1;
+    let taskSubmit = document.getElementById("taskSubmit");
 
     function taskAdded(feedback) {
         const feedbackElement = document.getElementById("taskFeedback");
@@ -13,7 +14,8 @@ window.addEventListener("load", function (event) {
         }
     }
 
-    let taskSubmit = document.getElementById("taskSubmit");
+    
+
 
     taskSubmit.addEventListener("click", function (event) {
         event.preventDefault();
