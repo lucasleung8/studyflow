@@ -24,7 +24,7 @@
     border-radius: 50%;
     background-color: var(--background-color);
     cursor: pointer;
-    transition: background 0.8s;
+    transition: background 0.7s;
 }
 
 #themeSwitch:hover {
