@@ -8,12 +8,12 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University
 <head>
     <meta charset="utf-8">
     <title>Home - Studyflow</title>
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/darkmode.css">
     <link rel="stylesheet" href="css/calendar.css">
     <link rel="stylesheet" href="css/tasks.css">
-    <link rel="stylesheet" href="css/charts.css">
+    <link rel="stylesheet" href="css/events.css">
     <link rel="stylesheet" href="css/timer.css">
-    <link rel="stylesheet" href="css/style.css">
     <script src="
     https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js
     "></script>
@@ -25,7 +25,7 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University
 
 <body>
     <h1 id="greeting">Welcome, (name)!</h1>
-    <div class="taskFormContainer">
+    <div class="taskFormContainer container">
         <h1 id="taskHeader">Tasks</h1>
         <hr>
         <div id="tasklist"></div>
@@ -35,7 +35,7 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University
 
     <div id="overlay"></div>
 
-    <div class="taskFormContainer" id="taskPopup">
+    <div class="taskFormContainer container" id="taskPopup">
         <div id="createTask">
             <h2 id="createTaskHeader">Create Task</h2>
             Name: <input id="taskName" class="taskInput" name="taskName" type="text">
@@ -56,10 +56,10 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University
 
     
 
-    <div id="chartContainer" style="width: 50%;">
+    <div id="chartContainer" class="container" style="width: 50%;">
         <canvas id="chart"></canvas>
     </div>
-    <div id="timerContainer">
+    <div id="timerContainer" class="container">
         <div id="timerHeader">
             <h2>Start a Study Session:</h2>
         </div>
@@ -67,7 +67,7 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University
         <input id="timer_button" type="submit" value="Start">
     </div>
 
-    <div id="calendarContainer">
+    <div id="calendarContainer" class="container">
         <header id="calendarHeader">
             <p id="displayMonth">Month Year</p>
             <button id="themeSwitch">
@@ -100,7 +100,7 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University
             <ul id="calendarDates"></ul>
         </div>
     </div>
-    <div id="eventContainer">
+    <div id="eventContainer" class="container">
         <div id="eventHeader">
             <p id="eventDate">Month Day, Year</p>
             <button id="addEventButton" class="eventButton"><span class="eventPlus">+</span> Event</button>
