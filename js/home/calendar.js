@@ -182,7 +182,7 @@ window.addEventListener("load", function (event) {
                 <h4>${event.title}</h4>
                 <p>${event.description}</p>
                 </div>
-            `;
+                `;
                 eventItems.appendChild(div);
             }
         }
