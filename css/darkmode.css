@@ -1,0 +1,24 @@
+:root {
+    --background-color: #dcdcdc;
+    --container-color: #ffffff;
+    --font-color: #111111;
+    --border-color: #999999;
+    --shadow-color: rgba(0, 0, 0, 0.25);
+    --button-hover-color: #c6c6c6;
+    --button-active-color: #9e9e9e;
+    --highlight-color: #e53935;
+    --numb-color: #888888;
+}
+
+.darkmode {
+    --background-color: #121212;
+    --container-color: #1e1e1e;
+    --font-color: #e0e0e0;
+    --border-color: #444444;
+    --shadow-color: rgba(0, 0, 0, 0.6);
+    --button-hover-color: #2a2a2a;
+    --button-active-color: #3a3a3a;
+    --highlight-color: #ff4c4c;
+    --numb-color: #666666;
+    transition: background 0.5s;
+}

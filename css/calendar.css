@@ -1,0 +1,218 @@
+#calendarContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5%;
+    background: var(--container-color);
+    width: 86%;
+    max-width: 650px;
+    padding-left: 3%;
+    padding-right: 3%;
+    border: 3px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: 0 5px 30px var(--shadow-color);
+}
+
+#calendarHeader {
+    display: flex;
+    align-items: center;
+    padding: 5%;
+    padding-right: 3%;
+    padding-top: 20px;
+    padding-bottom: 15px;
+    justify-content: space-between;
+    color: var(--font-color);
+}
+
+#calendarNav {
+    display: flex;
+}
+
+#themeSwitch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 50px;
+    padding: 0;
+    border: 0px;
+    border-radius: 50%;
+    background-color: var(--background-color);
+    cursor: pointer;
+    transition: background 0.8s;
+}
+
+#themeSwitch:hover {
+    background-color: var(--button-hover-color);
+}
+
+#themeSwitch:active {
+    background-color: var(--button-active-color);
+}
+
+#themeSwitch svg {
+    fill: var(--font-color);
+}
+
+#themeSwitch svg:last-child {
+    display: none;
+}
+
+.darkmode #themeSwitch svg:first-child {
+    display: none;
+}
+
+.darkmode #themeSwitch svg:last-child {
+    display: block;
+}
+
+.monthNav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 25px;
+    margin: 5px;
+    width: 30px;
+    height: 30px;
+    padding-bottom: 5%;
+    border: none;
+    border-radius: 5px;
+    background: none;
+    color: var(--font-color);
+}
+
+.monthNav:hover {
+    background: var(--button-hover-color);
+}
+
+.monthNav:active {
+    background: var(--button-active-color);
+}
+
+#prevMonth {
+    margin-right: -10px;
+}
+
+#displayMonth {
+    font-weight: 500;
+    font-size: 20px;
+}
+
+#calendarBody {
+    padding-top: 10px;
+}
+
+#calendarBody li {
+    width: calc(100%/7);
+    font-size: 18px;
+}
+
+#calendarWeekdays {
+    list-style: none;
+    display: flex;
+    text-align: center;
+    flex-wrap: wrap;
+    font-weight: 500;
+    color: var(--font-color);
+}
+
+#calendarDates {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    margin-top: 15px;
+    padding-bottom: 5px;
+    color: var(--font-color);
+}
+
+#calendarDates li {
+    list-style: none;
+    width: calc(100%/7);
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    transition: background 0.2s;
+    border-radius: 3px;
+}
+
+#calendarDates li:not(.numb):hover {
+    background: var(--button-hover-color);
+    cursor: pointer;
+}
+
+#calendarDates li:not(.numb):active {
+    background: #acacac;
+}
+
+.highlight {
+    color: var(--highlight-color);
+}
+
+.numb {
+    color: var(--numb-color);
+}
+
+.selectedDate {
+    border: 2px solid var(--border-color);
+    border-radius: 3px;
+}
+
+#eventContainer {
+    display: flex;
+    flex-direction: column;
+    background: var(--container-color);
+    width: 86%;
+    max-width: 650px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-left: 3%;
+    padding-right: 3%;
+    box-shadow: 0 5px 30px var(--shadow-color);
+    border: 2.5px solid var(--border-color);
+    border-radius: 5px;
+}
+
+#eventHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px;
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--font-color);
+}
+
+.eventButton {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 2px 5px 4px 5px;
+    color: var(--font-color);
+    background: var(--container-color);
+    border: 2px solid var(--border-color);
+    box-shadow: 0 1px 3px var(--shadow-color);
+    border-radius: 1em;
+}
+
+.eventButton:hover {
+    background: var(--button-hover-color);
+    box-shadow: 0 1px 3px var(--shadow-color);
+}
+
+.eventButton:active {
+    background: var(--button-active-color);
+    box-shadow: 0 0.5px 3px var(--shadow-color);
+}
+
+.eventPlus {
+    font-size: 1.2em;
+    margin-right: 0.1em;
+    padding-bottom: 2px;
+}
+
+.eventItem {
+    color: var(--font-color);
+    margin: 5px;
+}
