@@ -1,8 +1,16 @@
 window.addEventListener("load", function (event) {
+    // UserId set at 1 as a placeholder, will be from session after login is made
     let userID = 1;
 
     function taskAdded(feedback) {
-        console.log("Server response:", feedback);
+        const feedbackElement = document.getElementById("taskFeedback");
+        if (feedback.status === "ok") {
+            feedbackElement.textContent = feedback.message; // Display success message
+            feedbackElement.style.color = "green"; 
+        } else if (feedback.error) {
+            feedbackElement.textContent = "Error: " + feedback.error; 
+            feedbackElement.style.color = "red"; 
+        }
     }
 
     let taskSubmit = document.getElementById("taskSubmit");
@@ -47,6 +55,9 @@ window.addEventListener("load", function (event) {
         })
         .catch(error => {
             console.error("Fetch error:", error);
+            const feedbackElement = document.getElementById("taskFeedback");
+            feedbackElement.textContent = "An error occurred while submitting the task.";
+            feedbackElement.style.color = "red";
         });
     });
 });
