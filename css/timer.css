@@ -29,12 +29,20 @@
     color: var(--font-color);
 }
 
-.timerButton:hover {
+.timerButton:enabled:hover {
     background: var(--button-hover-color);
 }
 
-.timerButton:active {
+.timerButton:disabled:hover {
+    cursor: not-allowed;
+}
+
+.timerButton:enabled:active {
     background: var(--button-active-color);
+}
+
+.timerButton:disabled:active {
+    cursor: not-allowed;
 }
 
 #timerHeader h2{

@@ -13,8 +13,9 @@ window.addEventListener("load", function (event) {
     let timerStart = document.getElementById('timerStart');
     let addTime = document.getElementById('addTime');
     let subtractTime = document.getElementById('subtractTime');
-    let minutes = 0;
-    let seconds = 10;
+    let minutes = 20;
+    let seconds = 0;
+    let selectedMinutes = minutes;
     let paused = false;
     let started = false;
 
@@ -23,24 +24,49 @@ window.addEventListener("load", function (event) {
      */
     function start_timer(){
         timer_interval = setInterval(function () {
-            if (seconds.toString().length == 1) {
-                timer.innerHTML = minutes + ":" + "0" + seconds;
-            } else {
-                timer.innerHTML = minutes + ":" + seconds;
-            }
 
             if (minutes === 0 && seconds === 0) {
                 clearInterval(timer_interval);
                 started = false;
+                minutes = selectedMinutes;
+                timer.innerHTML = minutes + ":" + "0" + seconds;
                 timerStart.setAttribute("value", "Start");
-            } else if (seconds === 0) {
+            }
+
+            if (seconds.toString().length === 1) {
+                timer.innerHTML = minutes + ":" + "0" + seconds;
+            } else {
+                timer.innerHTML = minutes + ":" + seconds;
+            }
+            
+            if (minutes !== 0 && seconds === 0) {
                 minutes -= 1;
                 seconds = 59;
             }
+
+
             seconds -= 1;
 
-        }, 1000)
+        }, 100)
     }
+
+    addTime.addEventListener("click", function (event) {
+        if (started === false && minutes <= 120){
+            seconds = 0;
+            minutes += 1;
+            selectedMinutes = minutes;
+            timer.innerHTML = minutes + ":" + "0" + seconds;
+        }
+    });
+
+    subtractTime.addEventListener("click", function (event) {
+        if (started === false && minutes > 1){
+            seconds = 0;
+            minutes -= 1;
+            selectedMinutes = minutes;
+            timer.innerHTML = minutes + ":" + "0" + seconds;
+        }
+    });
 
     timerStart.addEventListener("click", function (event) {
         // user unpauses timer
@@ -57,11 +83,9 @@ window.addEventListener("load", function (event) {
 
         // user starts timer for first time
         if (started === false) {
-            minutes = 0;
-            seconds = 10;
-            start_timer();
             started = true;
             timerStart.setAttribute("value", "Pause");
+            start_timer();
         }
 
     });
