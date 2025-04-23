@@ -8,7 +8,7 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
 
 window.addEventListener("load", function (event) {
 
-    // timer countdown
+    // Declare timer variables
     let timer = document.getElementById('timer');
     let timerStart = document.getElementById('timerStart');
     let addTime = document.getElementById('addTime');
@@ -21,6 +21,9 @@ window.addEventListener("load", function (event) {
 
     /**
      * Starts timer and keeps track of time
+     * 
+     * @param {}
+     * @returns
      */
     function start_timer(){
         timer_interval = setInterval(function () {
@@ -49,12 +52,11 @@ window.addEventListener("load", function (event) {
             
             seconds -= 1;
 
-        }, 100)
+        }, 1000)
     }
 
     addTime.addEventListener("click", function (event) {
         if (started === false && minutes <= 120){
-            seconds = 0;
             minutes += 1;
             selectedMinutes = minutes;
             timer.innerHTML = minutes + ":" + "0" + seconds;
@@ -63,13 +65,13 @@ window.addEventListener("load", function (event) {
 
     subtractTime.addEventListener("click", function (event) {
         if (started === false && minutes > 1){
-            seconds = 0;
             minutes -= 1;
             selectedMinutes = minutes;
             timer.innerHTML = minutes + ":" + "0" + seconds;
         }
     });
 
+    // Functionality for the Start/Pause button
     timerStart.addEventListener("click", function (event) {
         // user unpauses timer
         if (paused) {
