@@ -31,6 +31,14 @@ window.addEventListener("load", function (event) {
                 minutes = selectedMinutes;
                 timer.innerHTML = minutes + ":" + "0" + seconds;
                 timerStart.setAttribute("value", "Start");
+                addTime.removeAttribute("disabled");
+                subtractTime.removeAttribute("disabled");
+                return;
+            }
+
+            if (minutes !== 0 && seconds === 0) {
+                minutes -= 1;
+                seconds = 59;
             }
 
             if (seconds.toString().length === 1) {
@@ -39,12 +47,6 @@ window.addEventListener("load", function (event) {
                 timer.innerHTML = minutes + ":" + seconds;
             }
             
-            if (minutes !== 0 && seconds === 0) {
-                minutes -= 1;
-                seconds = 59;
-            }
-
-
             seconds -= 1;
 
         }, 100)
@@ -79,12 +81,15 @@ window.addEventListener("load", function (event) {
             clearInterval(timer_interval);
             paused = true;
             timerStart.setAttribute("value", "Start");
+            
         }
 
         // user starts timer for first time
         if (started === false) {
             started = true;
             timerStart.setAttribute("value", "Pause");
+            addTime.setAttribute("disabled", "");
+            subtractTime.setAttribute("disabled", "");
             start_timer();
         }
 
