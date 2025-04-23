@@ -83,7 +83,6 @@ window.addEventListener("load", function (event) {
             clearInterval(timer_interval);
             paused = true;
             timerStart.setAttribute("value", "Start");
-            
         }
 
         // user starts timer for first time
