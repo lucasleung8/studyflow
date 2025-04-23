@@ -10,7 +10,9 @@ window.addEventListener("load", function (event) {
 
     // timer countdown
     let timer = document.getElementById('timer');
-    let timer_button = document.getElementById('timer_button');
+    let timerStart = document.getElementById('timerStart');
+    let addTime = document.getElementById('addTime');
+    let subtractTime = document.getElementById('subtractTime');
     let minutes = 0;
     let seconds = 10;
     let paused = false;
@@ -29,6 +31,8 @@ window.addEventListener("load", function (event) {
 
             if (minutes === 0 && seconds === 0) {
                 clearInterval(timer_interval);
+                started = false;
+                timerStart.setAttribute("value", "Start");
             } else if (seconds === 0) {
                 minutes -= 1;
                 seconds = 59;
@@ -38,17 +42,17 @@ window.addEventListener("load", function (event) {
         }, 1000)
     }
 
-    timer_button.addEventListener("click", function (event) {
+    timerStart.addEventListener("click", function (event) {
         // user unpauses timer
         if (paused) {
             start_timer();
             paused = false;
-            timer_button.setAttribute("value", "Pause");
+            timerStart.setAttribute("value", "Pause");
             // user pauses timer after starting it
         } else if (paused === false && started === true) {
             clearInterval(timer_interval);
             paused = true;
-            timer_button.setAttribute("value", "Start");
+            timerStart.setAttribute("value", "Start");
         }
 
         // user starts timer for first time
@@ -57,7 +61,7 @@ window.addEventListener("load", function (event) {
             seconds = 10;
             start_timer();
             started = true;
-            timer_button.setAttribute("value", "Pause");
+            timerStart.setAttribute("value", "Pause");
         }
 
     });
