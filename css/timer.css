@@ -5,12 +5,36 @@
     justify-content: center;
 }
 
-#timerBody {
+#timerButtons {
     display: flex;
     flex-direction: row;
     color: var(--font-color);
     align-items: center;
     justify-content: center;
+}
+
+.timerButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 25px;
+    margin: 5px;
+    width: 30px;
+    height: 30px;
+    padding-bottom: 5%;
+    border: none;
+    border-radius: 5px;
+    background: none;
+    color: var(--font-color);
+}
+
+.timerButton:hover {
+    background: var(--button-hover-color);
+}
+
+.timerButton:active {
+    background: var(--button-active-color);
 }
 
 #timerHeader h2{
@@ -24,7 +48,7 @@
     font-size: 20px;
 }
 
-#timer_button {
+#timerStart {
     font-weight: 450;
     font-size: 20px;
     padding: 3px 10px 5px 10px;
