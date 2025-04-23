@@ -16,26 +16,32 @@ window.addEventListener("load", function (event) {
     let paused = false;
     let started = false;
 
-    timer_button.addEventListener("click", function (event) {
+    /**
+     * Starts timer and keeps track of time
+     */
+    function start_timer(){
+        timer_interval = setInterval(function () {
+            if (seconds.toString().length == 1) {
+                timer.innerHTML = minutes + ":" + "0" + seconds;
+            } else {
+                timer.innerHTML = minutes + ":" + seconds;
+            }
 
+            if (minutes === 0 && seconds === 0) {
+                clearInterval(timer_interval);
+            } else if (seconds === 0) {
+                minutes -= 1;
+                seconds = 59;
+            }
+            seconds -= 1;
+
+        }, 1000)
+    }
+
+    timer_button.addEventListener("click", function (event) {
         // user unpauses timer
         if (paused) {
-            timer_interval = setInterval(function () {
-                if (seconds.toString().length == 1) {
-                    timer.innerHTML = minutes + ":" + "0" + seconds;
-                } else {
-                    timer.innerHTML = minutes + ":" + seconds;
-                }
-
-                if (minutes === 0 && seconds === 0) {
-                    clearInterval(timer_interval);
-                } else if (seconds === 0) {
-                    minutes -= 1;
-                    seconds = 59;
-                }
-                seconds -= 1;
-
-            }, 1000)
+            start_timer();
             paused = false;
             timer_button.setAttribute("value", "Pause");
             // user pauses timer after starting it
@@ -49,24 +55,9 @@ window.addEventListener("load", function (event) {
         if (started === false) {
             minutes = 0;
             seconds = 10;
-            timer_interval = setInterval(function () {
-                if (seconds.toString().length == 1) {
-                    timer.innerHTML = minutes + ":" + "0" + seconds;
-                } else {
-                    timer.innerHTML = minutes + ":" + seconds;
-                }
-
-                if (minutes === 0 && seconds === 0) {
-                    clearInterval(timer_interval);
-                } else if (seconds === 0) {
-                    minutes -= 1;
-                    seconds = 59;
-                }
-                seconds -= 1;
-
-            }, 1000)
+            start_timer();
             started = true;
-            timer_button.setAttribute("value", "Pause")
+            timer_button.setAttribute("value", "Pause");
         }
 
     });
