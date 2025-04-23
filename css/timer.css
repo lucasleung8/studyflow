@@ -5,6 +5,14 @@
     justify-content: center;
 }
 
+#timerBody {
+    display: flex;
+    flex-direction: row;
+    color: var(--font-color);
+    align-items: center;
+    justify-content: center;
+}
+
 #timerHeader h2{
     font-weight: 500;
     font-size: 20px;
