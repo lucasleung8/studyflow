@@ -12,6 +12,7 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
 <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Studyflow</title>
+    <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/darkmode.css">
     <link rel="stylesheet" href="css/calendar.css">
