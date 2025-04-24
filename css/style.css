@@ -58,3 +58,8 @@ body {
     background: var(--button-active-color);
     box-shadow: 0 0.5px 3px var(--shadow-color);
 }
+
+#logoutButton{
+    text-align: right;
+    margin-right: 20px;
+}
