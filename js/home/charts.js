@@ -27,7 +27,9 @@ window.addEventListener("load", function () {
             scales: {
                 y: {
                     beginAtZero: true,
-                    stepSize: 1
+                    ticks: {
+                        stepSize: 1
+                    }
                 }
             }
         }
@@ -35,10 +37,11 @@ window.addEventListener("load", function () {
 });
 
 function updateChart(dayIndex) {
-    if (!chart) return;
+    if (!chart) {
+        return;
+    }
 
     chart.data.datasets[0].data[dayIndex]++;
     chart.update();
-
     localStorage.setItem("chartData", JSON.stringify(chart.data.datasets[0].data));
 }
