@@ -9,9 +9,9 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
 window.addEventListener("load", function (event) {
     // Declare timer variables
     let timer = document.getElementById('timer');
-    let timerStart = document.getElementById('timerStart');
-    let addTime = document.getElementById('addTime');
-    let subtractTime = document.getElementById('subtractTime');
+    const timerStart = document.getElementById('timerStart');
+    const addTime = document.getElementById('addTime');
+    const subtractTime = document.getElementById('subtractTime');
     let timerCompleteSound = new Audio ("media/timerOver.wav");
     let minutes = 20;
     let seconds = 0;
