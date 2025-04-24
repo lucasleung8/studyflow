@@ -13,44 +13,6 @@
     display: flex;
 }
 
-#themeSwitch {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50px;
-    width: 50px;
-    padding: 0;
-    border: 0px;
-    border-radius: 50%;
-    background-color: var(--background-color);
-    cursor: pointer;
-    transition: background 0.7s;
-}
-
-#themeSwitch:hover {
-    background-color: var(--button-hover-color);
-}
-
-#themeSwitch:active {
-    background-color: var(--button-active-color);
-}
-
-#themeSwitch svg {
-    fill: var(--font-color);
-}
-
-#themeSwitch svg:last-child {
-    display: none;
-}
-
-.darkmode #themeSwitch svg:first-child {
-    display: none;
-}
-
-.darkmode #themeSwitch svg:last-child {
-    display: block;
-}
-
 .monthNav {
     display: flex;
     align-items: center;
