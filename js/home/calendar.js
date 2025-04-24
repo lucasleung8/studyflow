@@ -27,10 +27,6 @@ window.addEventListener("load", function (event) {
 
     prevMonth.addEventListener("click", () => changeMonth("prev"));
     nextMonth.addEventListener("click", () => changeMonth("next"));
-
-    //Event buttons
-    let addEventButton = document.getElementById("addEventButton");
-    addEventButton.addEventListener("click", () => addEvent("Good Title", "Even better description"));
     
     //Dark/Light mode button
     let themeSwitch = document.getElementById("themeSwitch");
@@ -168,12 +164,6 @@ window.addEventListener("load", function (event) {
             for (let event of eventsPerDay[selectedDay]) {
                 let div = document.createElement("div");
                 div.classList.add("eventItem");
-                div.innerHTML = `
-                <div>
-                <h4>${event.title}</h4>
-                <p>${event.description}</p>
-                </div>
-                `;
                 eventItems.appendChild(div);
             }
         }
