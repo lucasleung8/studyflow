@@ -1,0 +1,39 @@
+<!doctype html>
+<!--
+Names: Raymond, Lucas, Aiden
+Student Numbers:
+Date Created: March 30, 2025
+Description: Studyflow, a productivity tool that helps students transitioning to university with managing their tasks.
+Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
+-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sign Up - Studyflow</title>
+        <link rel="stylesheet" href="css/auth.css">
+        <script src="js/login/signup.js" defer></script>
+    </head>
+    <body>
+        <a href="index.html" class="center-text">Studyflow</a>
+        <div id="signupContainer" class="rounded-container">
+            <h2>Sign Up</h2>
+            <div id="signupForm">
+                <label for="realName">Full Name:</label>
+                <input id="realName" name="realName" type="text">
+                <span id="realNameFeedback" class="feedback"></span>
+                <label for="username">Username:</label>
+                <input id="username" name="username" type="text">
+                <span id="usernameFeedback" class="feedback"></span>
+                <label for="password">Password:</label>
+                <input id="password" name="password" type="password">
+                <span id="passwordFeedback" class="feedback"></span>
+                <label for="confirmPassword">Confirm Password:</label>
+                <input id="confirmPassword" name="confirmPassword" type="password">
+                <span id="confirmPasswordFeedback" class="feedback"></span>
+                <span id="signupFeedback" class="feedback"></span>
+                <input id="submitSignUp" class="authButton" type="submit" value="Sign Up">
+                <a href="login.html" class="authButton">Back to Login</a>
+            </div>
+        </div>
+    </body>
+</html>

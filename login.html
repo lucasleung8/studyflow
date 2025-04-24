@@ -11,20 +11,33 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
 <head>
     <meta charset="utf-8">
     <title>Login - Studyflow</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/script.js"></script>
+    <link rel="stylesheet" href="css/auth.css">
+    <script src="js/login/login.js" defer></script>
 </head>
-
 <body>
-    <p>Currently WIP</p>
-    <a href="home.html">Go to Home</a>
-    <div id="login">
-        Username: <input id="username" name="username" type="text"><br>
-        Password: <input id="password" name="password" type="text"><br>
-        <input id="submitLogin" type="submit" value="Login">
-        <input id="signUp" type="submit" value="Sign Up">
+    <a href="index.html" class="center-text">Studyflow</a>
+    <div id="loginContainer" class="rounded-container">
+        <h2>Login</h2>
+        <div id="loginForm">
+            <span id="errorFeedback" class="feedback error"></span>
+            <label for="username">Username:</label>
+            <input id="username" name="username" type="text">
+            <span id="usernameFeedback" class="feedback"></span>
+            <label for="password">Password:</label>
+            <input id="password" name="password" type="password">
+            <span id="passwordFeedback" class="feedback"></span>
+            <span id="loginFeedback" class="feedback"></span>
+            <input id="submitLogin" class="authButton" type="submit" value="Login">
+            <a href="signup.html" id="goToSignUp" class="authButton">Sign Up</a>
+        </div>
     </div>
-    
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        if (error === 'not_logged_in') {
+            const errorFeedback = document.getElementById('errorFeedback');
+            errorFeedback.textContent = 'You must be logged in to view this page.';
+        }
+    </script>
 </body>
-
 </html>

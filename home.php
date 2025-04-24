@@ -1,4 +1,5 @@
 <!doctype html>
+
 <!--
 Names: Raymond, Lucas, Aiden
 Student Numbers:
@@ -27,7 +28,17 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
 </head>
 
 <body>
-    <h1 id="greeting">Welcome, (name)!</h1>
+    <?php
+    session_start();
+    if (!isset($_SESSION['userID'])) {
+        header("Location: login.html?error=not_logged_in");
+        exit;
+    }
+    ?>
+    <h1 id="greeting">Welcome, <?php echo htmlspecialchars($_SESSION['realName']); ?>!</h1>
+    <form action="server/logout.php" method="POST" style="text-align: right; margin-right: 20px;">
+        <button type="submit" class="taskButton button">Logout</button>
+    </form>
     <div class="taskFormContainer container">
         <h1 id="taskHeader">Tasks</h1>
         <hr>
