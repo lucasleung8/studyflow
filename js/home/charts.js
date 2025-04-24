@@ -22,6 +22,13 @@ window.addEventListener("load", function () {
                 borderWidth: 1,
                 fill: false
             }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
         }
     });
 });
