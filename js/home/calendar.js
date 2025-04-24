@@ -14,9 +14,6 @@ window.addEventListener("load", function (event) {
     //Names of each month
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-    //The events corresponding to each day
-    let eventsPerDay = {};
-
     //Variables and DOM elements
     let selectedDay;
     let allDays = document.getElementById("calendarDates");
@@ -59,7 +56,6 @@ window.addEventListener("load", function (event) {
             document.body.classList.add("darkmode");
         }
     }
-
 
     /**
      * Generates the calendar according to the current date
@@ -161,19 +157,6 @@ window.addEventListener("load", function (event) {
 
         //Visually change calendar
         generateCalendar();
-    }
-
-    /**
-     * Adds an event to the temporary local array (this will be changed in the future)
-     * @param {String} title 
-     * @param {String} description 
-     */
-    function addEvent(title, description) {
-        if (!eventsPerDay[selectedDay]) {
-            eventsPerDay[selectedDay] = []; // create array if it doesn't exist yet
-        }
-        eventsPerDay[selectedDay].push({ title, description });
-        displayEvents(selectedDay);
     }
 
     /**

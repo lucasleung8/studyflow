@@ -142,7 +142,6 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
     <div id="eventContainer" class="container">
         <div id="eventHeader">
             <p id="eventDate">Month Day, Year</p>
-            <button id="addEventButton" class="button"><span class="eventPlus">+</span> Event</button>
         </div>
         <div id="eventItems"></div>
     </div>
