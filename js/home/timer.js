@@ -7,12 +7,12 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
 */
 
 window.addEventListener("load", function (event) {
-
     // Declare timer variables
     let timer = document.getElementById('timer');
     let timerStart = document.getElementById('timerStart');
     let addTime = document.getElementById('addTime');
     let subtractTime = document.getElementById('subtractTime');
+    let timerCompleteSound = new Audio ("media/timerOver.wav");
     let minutes = 20;
     let seconds = 0;
     let selectedMinutes = minutes;
@@ -28,6 +28,7 @@ window.addEventListener("load", function (event) {
     function start_timer(){
         timer_interval = setInterval(function () {
 
+            // time is up, reset timer to previously selected time and offer feedback
             if (minutes === 0 && seconds === 0) {
                 clearInterval(timer_interval);
                 started = false;
@@ -36,6 +37,7 @@ window.addEventListener("load", function (event) {
                 timerStart.setAttribute("value", "Start");
                 addTime.removeAttribute("disabled");
                 subtractTime.removeAttribute("disabled");
+                timerCompleteSound.play();
                 return;
             }
 
