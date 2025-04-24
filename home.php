@@ -15,6 +15,7 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/darkmode.css">
+    <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/calendar.css">
     <link rel="stylesheet" href="css/tasks.css">
     <link rel="stylesheet" href="css/events.css">
