@@ -1,5 +1,5 @@
 window.addEventListener("load", function () {
-    const userID = 1;
+    let userID
     const taskList = document.getElementById("tasklist");
     const taskPopup = document.getElementById("taskPopup");
     const editTaskPopup = document.getElementById("editTaskPopup");
@@ -12,6 +12,23 @@ window.addEventListener("load", function () {
     let currentTab = "ongoing";
 
     ongoingTab.classList.add("activeTab");
+
+    fetch("server/getUserID.php", {
+        method: "GET",
+        credentials: "include",
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.status === "ok") {
+                userID = data.userID;
+                loadTasks(false);
+            } else {
+                console.error("Failed to fetch userID:", data.message);
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching userID:", error);
+        });
 
     function showPopup(popup) {
         popup.style.display = "flex";
