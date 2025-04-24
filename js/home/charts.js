@@ -26,7 +26,8 @@ window.addEventListener("load", function () {
         options: {
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    stepSize: 1
                 }
             }
         }
