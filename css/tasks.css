@@ -44,6 +44,13 @@
 }
 
 #tasklist {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     min-height: 200px;
 }
 
@@ -53,6 +60,28 @@
     top: 50%; 
     left: 50%; 
     transform: translate(-50%, -50%); 
+    z-index: 1000;
+    flex-direction: column;
+    background-color: var(--container-color);
+    width: 86%;
+    max-width: 650px;
+    padding: 10px;
+    border: 3px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: 0 5px 30px var(--shadow-color);
+    color: var(--font-color);
+    font-weight: 400;
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+#editTaskPopup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 1000;
     flex-direction: column;
     background-color: var(--container-color);
@@ -80,6 +109,44 @@
     z-index: 999;
 }
 
-#createTask {
+#taskTabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;    
+}
 
+#taskTabs .taskButton {
+    flex: 1;
+    text-align: center;
+}
+
+#taskTabs .taskButton.activeTab {
+    background-color: var(--font-color);
+    color: var(--container-color); 
+    border: 1px solid var(--container-color);
+}
+
+.taskItem {
+    width: 90%;
+    margin: 10px auto; 
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 10px;
+    background-color: var(--container-color);
+    box-shadow: 0 2px 5px var(--shadow-color);
+    color: var(--font-color);
+    transition: background 0.5s, color 0.5s, border-color 0.5s;
+}
+
+.taskItem h3 {
+    margin: 0;
+    font-size: 18px;
+    color: var(--font-color);
+}
+
+.taskItem p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: var(--font-color);
 }

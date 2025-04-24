@@ -6,20 +6,31 @@ Description: Studyflow, a productivity tool that helps students transitioning to
 Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
 */
 
-window.addEventListener("load", function (event) {
+let chart;
 
-    // spawn the chart
+window.addEventListener("load", function () {
     const ctx = document.getElementById('chart');
-    new Chart(ctx, {
+    const savedData = JSON.parse(localStorage.getItem("chartData")) || [0, 0, 0, 0, 0, 0, 0];
+
+    chart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'],
+            labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
             datasets: [{
                 label: 'Completed Tasks This Week',
-                data: [1, 3, 8, 4, 2, 0, 1],
+                data: savedData,
                 borderWidth: 1,
                 fill: false
             }]
         }
-    })
+    });
 });
+
+function updateChart(dayIndex) {
+    if (!chart) return;
+
+    chart.data.datasets[0].data[dayIndex]++;
+    chart.update();
+
+    localStorage.setItem("chartData", JSON.stringify(chart.data.datasets[0].data));
+}

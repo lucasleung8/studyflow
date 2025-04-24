@@ -1,82 +1,211 @@
-/*
-Names: Raymond, Aiden, Lucas Leung
-Student Numbers:
-Date Created: April 2, 2025
-Description: Studyflow, a productivity tool that helps students transitioning to university with managing their tasks.
-Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
-*/
+window.addEventListener("load", function () {
+    const userID = 1;
+    const taskList = document.getElementById("tasklist");
+    const taskPopup = document.getElementById("taskPopup");
+    const editTaskPopup = document.getElementById("editTaskPopup");
+    const overlay = document.getElementById("overlay");
+    const createTaskButton = document.getElementById("createTask");
+    const taskSubmitButton = document.getElementById("taskSubmit");
+    const completedTab = document.getElementById("completedTab");
+    const ongoingTab = document.getElementById("ongoingTab");
+    const editTaskSubmitButton = document.getElementById("editTaskSubmit");
+    let currentTab = "ongoing";
 
-window.addEventListener("load", function (event) {
-    // UserId set at 1 as a placeholder, will be from session after login is made
-    let userID = 1;
-    let taskSubmit = document.getElementById("taskSubmit");
-    let createTask = document.getElementById("createTask");
-    let taskPopup = document.getElementById("taskPopup");
-    let overlay = document.getElementById("overlay");
+    ongoingTab.classList.add("activeTab");
 
-    function taskAdded(feedback) {
-        const feedbackElement = document.getElementById("taskFeedback");
-        if (feedback.status === "ok") {
-            feedbackElement.textContent = feedback.message; // Display success message
-            feedbackElement.style.color = "green"; 
-        } else if (feedback.error) {
-            feedbackElement.textContent = "Error: " + feedback.error; 
-            feedbackElement.style.color = "red"; 
-        }
+    function showPopup(popup) {
+        popup.style.display = "flex";
+        overlay.style.display = "block";
     }
 
-    createTask.addEventListener("click", function (event) {
-        taskPopup.style["display"] = "flex";
-        overlay.style["display"] = "block";
-        overlay.addEventListener("click", function (event) {
-            taskPopup.style["display"] = "none";
-            overlay.style["display"] = "none";
-        })
-    }) 
+    function hidePopup(popup) {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    }
 
-    taskSubmit.addEventListener("click", function (event) {
+    createTaskButton.addEventListener("click", () => {
+        showPopup(taskPopup);
+    });
+
+    overlay.addEventListener("click", () => {
+        hidePopup(taskPopup);
+        hidePopup(editTaskPopup);
+    });
+
+    taskSubmitButton.addEventListener("click", (event) => {
         event.preventDefault();
+        const name = document.getElementById("taskName").value;
+        const description = document.getElementById("taskDesc").value;
+        const course = document.getElementById("course").value;
+        const dueDate = document.getElementById("dueDate").value;
+        const priority = document.getElementById("priority").value;
 
-        let name = document.getElementById("taskName").value;
-        let description = document.getElementById("taskDesc").value;
-        let course = document.getElementById("course").value;
-        let duedate = document.getElementById("dueDate").value;
-        let priority = document.getElementById("priority").value;
-
-        let formData = new FormData();
+        const formData = new FormData();
         formData.append("name", name);
         formData.append("description", description);
         formData.append("course", course);
-        formData.append("duedate", duedate);
+        formData.append("duedate", dueDate);
         formData.append("priority", priority);
         formData.append("userid", userID);
 
         fetch("server/tasks.php", {
             method: "POST",
             body: formData,
-            credentials: 'include'
+            credentials: "include",
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok " + response.statusText);
-            }
-            return response.text(); 
-        })
-        .then(text => {
-            console.log("Response text:", text); 
-            try {
-                let json = JSON.parse(text);
-                taskAdded(json);
-            } catch (error) {
-                console.error("Failed to parse JSON:", error);
-                console.error("Response text:", text);
-            }
-        })
-        .catch(error => {
-            console.error("Fetch error:", error);
-            const feedbackElement = document.getElementById("taskFeedback");
-            feedbackElement.textContent = "An error occurred while submitting the task.";
-            feedbackElement.style.color = "red";
-        });
+            .then((response) => {
+                if (!response.ok) throw new Error("Network response was not ok " + response.statusText);
+                return response.json();
+            })
+            .then((json) => {
+                const feedbackElement = document.getElementById("taskFeedback");
+                feedbackElement.textContent = json.status === "ok" ? json.message : "Error: " + json.error;
+                feedbackElement.style.color = json.status === "ok" ? "green" : "red";
+                if (json.status === "ok") {
+                    hidePopup(taskPopup);
+                    loadTasks(false);
+                }
+            })
+            .catch((error) => {
+                console.error("Fetch error:", error);
+                const feedbackElement = document.getElementById("taskFeedback");
+                feedbackElement.textContent = "An error occurred while submitting the task.";
+                feedbackElement.style.color = "red";
+            });
     });
+
+    function loadTasks(completed = false) {
+        fetch(`server/getTasks.php?userid=${userID}&completed=${completed}`)
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.status === "ok") {
+                    const sortedTasks = data.tasks.sort((a, b) => b.priority - a.priority); // Sort by priority (descending)
+                    displayTasks(sortedTasks, completed);
+                } else {
+                    taskList.innerHTML = `<p>Error: ${data.message}</p>`;
+                }
+            })
+            .catch((error) => {
+                console.error("Error loading tasks:", error);
+                taskList.innerHTML = "<p>Failed to load tasks.</p>";
+            });
+    }
+
+    function displayTasks(tasks, completed) {
+        taskList.innerHTML = "";
+        if (tasks.length === 0) {
+            taskList.innerHTML = `<p>No ${completed ? "completed" : "ongoing"} tasks available.</p>`;
+            return;
+        }
+    
+        tasks.forEach((task) => {
+            const taskItem = document.createElement("div");
+            taskItem.className = "taskItem";
+    
+            let completedTime = "";
+            if (task.completed && task.completedDate) {
+                const serverDate = new Date(task.completedDate);
+                const estDate = new Date(serverDate.getTime() - 6 * 60 * 60 * 1000);
+                completedTime = `<p>Completed on: ${estDate.toLocaleString("en-US", { timeZone: "America/New_York" })}</p>`;
+            }
+    
+            const dueDate = new Date(task.dueDate);
+            const isOverdue = !task.completed && dueDate < new Date();
+    
+            if (isOverdue) {
+                taskItem.style.backgroundColor = "#FFCCCB";
+            }
+    
+            taskItem.innerHTML = `
+                <h3>${task.name}</h3>
+                <p>${task.description}</p>
+                <p>Course: ${task.course}</p>
+                <p>Due: ${dueDate.toLocaleString()}</p>
+                <p>Priority: ${["Low", "Medium", "High", "URGENT"][task.priority - 1]}</p>
+                ${completedTime}
+                ${isOverdue ? `<p style="color: white; font-weight: bold;">Overdue!</p>` : ""}
+                <div class="taskActions">
+                    ${
+                        !task.completed
+                            ? `<button class="editTaskButton taskButton" data-task-id="${task.taskID}">Edit</button>
+                            <button class="completeTaskButton taskButton" data-task-id="${task.taskID}">Complete</button>`
+                            : ""
+                    }
+                    <button class="deleteTaskButton taskButton" data-task-id="${task.taskID}">Delete</button>
+                </div>
+            `;
+            taskList.appendChild(taskItem);
+    
+            if (!task.completed) {
+                taskItem.querySelector(".editTaskButton").addEventListener("click", () => openEditPopup(task));
+                taskItem.querySelector(".completeTaskButton").addEventListener("click", () => updateTaskCompletion(task.taskID, true));
+            }
+    
+            taskItem.querySelector(".deleteTaskButton").addEventListener("click", () => deleteTask(task.taskID));
+        });
+    }
+
+    function deleteTask(taskID) {
+        fetch("server/deleteTask.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `task_id=${taskID}`
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "ok") {
+                    loadTasks(currentTab === "completed");
+                } else {
+                    console.error("Failed to delete task:", data.message);
+                }
+            })
+            .catch(error => console.error("Error deleting task:", error));
+    }
+
+    function updateTaskCompletion(taskID, completed) {
+        fetch("server/updateTask.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `task_id=${taskID}&completed=${completed}`
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "ok") {
+                    loadTasks(currentTab === "completed");
+                    if (completed) {
+                        const dayIndex = new Date().getDay();
+                        updateChart(dayIndex);
+                    }
+                } else {
+                    alert("Failed to update task: " + data.message);
+                }
+            })
+            .catch(error => console.error("Error updating task:", error));
+    }
+
+    function updateChart(completed) {
+        if (completed) {
+            const dayIndex = new Date().getDay();
+            chart.data.datasets[0].data[dayIndex]++;
+            chart.update();
+        }
+    }
+
+    ongoingTab.addEventListener("click", () => {
+        currentTab = "ongoing";
+        loadTasks(false);
+    
+        ongoingTab.classList.add("activeTab");
+        completedTab.classList.remove("activeTab");
+    });
+    
+    completedTab.addEventListener("click", () => {
+        currentTab = "completed";
+        loadTasks(true);
+    
+        completedTab.classList.add("activeTab");
+        ongoingTab.classList.remove("activeTab");
+    });
+
+    loadTasks(false);
 });

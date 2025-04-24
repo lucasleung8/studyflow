@@ -31,6 +31,10 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
     <div class="taskFormContainer container">
         <h1 id="taskHeader">Tasks</h1>
         <hr>
+        <div id="taskTabs">
+            <input id="ongoingTab" class="taskButton button" type="button" value="Ongoing Tasks">
+            <input id="completedTab" class="taskButton button" type="button" value="Completed Tasks">
+        </div>
         <div id="tasklist"></div>
         <input id="createTask" class="taskButton button" type="button" value="Create Task">
         <hr>
@@ -54,6 +58,22 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
             <span id="taskFeedback"></span>
             <input id="taskSubmit" class="taskButton button" type="submit">
         </div>
+    </div>
+
+    <div class="taskFormContainer container" id="editTaskPopup">
+        <h2 id="editTaskHeader">Edit Task</h2>
+        Name: <input id="editTaskName" class="taskInput" name="editTaskName" type="text">
+        Description: <input id="editTaskDesc" class="taskInput" name="editTaskDesc" type="text">
+        Course: <input id="editCourse" class="taskInput" name="editCourse" type="text">
+        Due Date: <input id="editDueDate" class="taskInput" name="editDueDate" type="datetime-local">
+        Priority: <select id="editPriority" class="taskInput" name="editPriority">
+            <option value="1">Low</option>
+            <option value="2">Medium</option>
+            <option value="3">High</option>
+            <option value="4">URGENT</option>
+        </select>
+        <span id="editTaskFeedback"></span>
+        <input id="editTaskSubmit" class="taskButton button" type="submit" value="Save Changes">
     </div>
 
 
