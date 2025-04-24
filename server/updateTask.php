@@ -6,26 +6,46 @@
 * Description: Studyflow, a productivity tool that helps students transitioning to university with managing their tasks.
 * Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
  */
+session_start();
+if (!isset($_SESSION['userID'])) {
+    echo json_encode(["status" => "error", "message" => "User not logged in."]);
+    exit;
+}
+
 include "connect.php";
 
-header('Content-Type: application/json');
+$taskID = $_POST['task_id'] ?? null;
+$completed = isset($_POST['completed']) ? filter_var($_POST['completed'], FILTER_VALIDATE_BOOLEAN) : null;
 
-try {
-    $task_id = filter_input(INPUT_POST, "task_id", FILTER_VALIDATE_INT);
-    $completed = filter_input(INPUT_POST, "completed", FILTER_VALIDATE_BOOLEAN);
-    $completedDate = $completed ? date('Y-m-d H:i:s') : null;
+if ($completed !== null) {
+    $stmt = $dbh->prepare("UPDATE tasks SET completed = ?, completedDate = NOW() WHERE taskID = ? AND userID = ?");
+    $stmt->execute([$completed, $taskID, $_SESSION['userID']]);
 
-    if ($task_id === null || $completed === null) {
-        echo json_encode(["status" => "error", "message" => "Invalid input"]);
-        exit;
+    if ($stmt->rowCount() > 0) {
+        echo json_encode(["status" => "ok", "message" => "Task completion updated successfully."]);
+    } else {
+        echo json_encode(["status" => "error", "message" => "Failed to update task completion."]);
     }
+    exit;
+}
 
-    $command = "UPDATE tasks SET completed = ?, completedDate = ? WHERE taskId = ?";
-    $stmt = $dbh->prepare($command);
-    $stmt->execute([$completed, $completedDate, $task_id]);
+$name = $_POST['name'] ?? null;
+$description = $_POST['description'] ?? null;
+$course = $_POST['course'] ?? null;
+$dueDate = $_POST['duedate'] ?? null;
+$priority = $_POST['priority'] ?? null;
 
-    echo json_encode(["status" => "ok", "message" => "Task updated successfully"]);
-} catch (Exception $e) {
-    echo json_encode(["status" => "error", "message" => $e->getMessage()]);
+if (!$taskID || !$name || !$description || !$course || !$dueDate || !$priority) {
+    echo json_encode(["status" => "error", "message" => "Invalid input. All fields are required."]);
+    exit;
+}
+
+$stmt = $dbh->prepare("UPDATE tasks SET name = ?, description = ?, course = ?, dueDate = ?, priority = ? WHERE taskID = ? AND userID = ?");
+$stmt->execute([$name, $description, $course, $dueDate, $priority, $taskID, $_SESSION['userID']]);
+
+if ($stmt->rowCount() > 0) {
+    echo json_encode(["status" => "ok", "message" => "Task updated successfully."]);
+} else {
+    echo json_encode(["status" => "error", "message" => "Failed to update task."]);
 }
 ?>

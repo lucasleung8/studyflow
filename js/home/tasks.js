@@ -1,5 +1,5 @@
 window.addEventListener("load", function () {
-    let userID
+    let userID;
     const taskList = document.getElementById("tasklist");
     const taskPopup = document.getElementById("taskPopup");
     const editTaskPopup = document.getElementById("editTaskPopup");
@@ -160,6 +160,48 @@ window.addEventListener("load", function () {
     
             taskItem.querySelector(".deleteTaskButton").addEventListener("click", () => deleteTask(task.taskID));
         });
+    }
+
+    function openEditPopup(task) {
+        const editTaskPopup = document.getElementById("editTaskPopup");
+        const overlay = document.getElementById("overlay");
+    
+        document.getElementById("editTaskName").value = task.name;
+        document.getElementById("editTaskDesc").value = task.description;
+        document.getElementById("editCourse").value = task.course;
+        document.getElementById("editDueDate").value = task.dueDate;
+        document.getElementById("editPriority").value = task.priority;
+    
+        editTaskPopup.style.display = "flex";
+        overlay.style.display = "block";
+    
+        const editTaskSubmitButton = document.getElementById("editTaskSubmit");
+        editTaskSubmitButton.onclick = function (event) {
+            event.preventDefault();
+    
+            const updatedName = document.getElementById("editTaskName").value;
+            const updatedDescription = document.getElementById("editTaskDesc").value;
+            const updatedCourse = document.getElementById("editCourse").value;
+            const updatedDueDate = document.getElementById("editDueDate").value;
+            const updatedPriority = document.getElementById("editPriority").value;
+    
+            // Send the updated task data to the server
+            fetch("server/updateTask.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `task_id=${task.taskID}&name=${encodeURIComponent(updatedName)}&description=${encodeURIComponent(updatedDescription)}&course=${encodeURIComponent(updatedCourse)}&duedate=${encodeURIComponent(updatedDueDate)}&priority=${updatedPriority}`
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "ok") {
+                        hidePopup(editTaskPopup);
+                        loadTasks(currentTab === "completed");
+                    } else {
+                        alert("Failed to update task: " + data.message);
+                    }
+                })
+                .catch(error => console.error("Error updating task:", error));
+        };
     }
 
     function deleteTask(taskID) {
