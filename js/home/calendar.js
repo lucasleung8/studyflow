@@ -27,12 +27,7 @@ window.addEventListener("load", function (event) {
 
     prevMonth.addEventListener("click", () => changeMonth("prev"));
     nextMonth.addEventListener("click", () => changeMonth("next"));
-    
-    //Dark/Light mode button
-    let themeSwitch = document.getElementById("themeSwitch");
-    themeSwitch.addEventListener("click", () => switchTheme());
 
-    //View another day
 
     //Change selected date to current date
     eventDate.innerHTML = `${months[month]} ${date.getDate()}, ${year}`;
@@ -60,19 +55,6 @@ window.addEventListener("load", function (event) {
     //Generate starting calendar
     generateCalendar();
 
-
-    /**
-     * Switches theme to either light/dark
-     */
-    function switchTheme() {
-        if (document.body.classList.contains("darkmode")) {
-            //Switch to lightmode
-            document.body.classList.remove("darkmode");
-        } else {
-            //Switch to darkmode
-            document.body.classList.add("darkmode");
-        }
-    }
 
     /**
      * Generates the calendar according to the current date
@@ -184,7 +166,7 @@ window.addEventListener("load", function (event) {
                 if (data.status === "ok") {
                     const sortedTasks = data.tasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate)); // Sort by priority (descending)
                     displayDateTasks(sortedTasks);
-                } else {    
+                } else {
                     dateTaskList.innerHTML = `<p>Error: ${data.message}</p>`;
                 }
             })

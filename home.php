@@ -27,6 +27,7 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
     <script src="js/home/calendar.js"></script>
     <script src="js/home/charts.js"></script>
     <script src="js/home/timer.js"></script>
+    <script src="js/home/darkmode.js"></script>
 </head>
 
 <body>
@@ -157,6 +158,7 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
         <div id="eventHeader">
             <p id="eventDate">Month Day, Year</p>
         </div>
+        <hr>
         <div id="dateTaskList"></div>
     </div>
 </body>
