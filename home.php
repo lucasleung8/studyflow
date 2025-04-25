@@ -110,6 +110,10 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
 
 
     <div id="chartContainer" class="container">
+        <div id="chartNav">
+        <button class="chartButton"><</button>
+        <button class="chartButton">></button>
+        </div>
         <canvas id="chart"></canvas>
     </div>
     <div id="timerContainer" class="container">
@@ -120,10 +124,11 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
         <div id="timerButtons">
             <button class="timerButton" id="subtractTime">-</button>
             <input id="timerStart" class="button" type="submit" value="Start">
+            <input id="timerStop" class="button" type="submit" value="Stop">
             <button class="timerButton" id="addTime">+</button>
         </div>
         <div>
-            <h3 id="minutesTotal">Total Minutes Studied: 0</h3>
+            <h3 id="minutesTotal">Total Minutes Studied: </h3>
         </div>
     </div>
 
