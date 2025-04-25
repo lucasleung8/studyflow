@@ -18,7 +18,6 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/calendar.css">
     <link rel="stylesheet" href="css/tasks.css">
-    <link rel="stylesheet" href="css/charts.css">
     <link rel="stylesheet" href="css/events.css">
     <link rel="stylesheet" href="css/timer.css">
     <script src="
@@ -126,6 +125,9 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
             <button class="timerButton" id="subtractTime">-</button>
             <input id="timerStart" class="button" type="submit" value="Start">
             <button class="timerButton" id="addTime">+</button>
+        </div>
+        <div>
+            <h3 id="minutesTotal">Total Minutes Studied: 0</h3>
         </div>
     </div>
 

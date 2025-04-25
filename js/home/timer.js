@@ -12,12 +12,29 @@ window.addEventListener("load", function (event) {
     const timerStart = document.getElementById('timerStart');
     const addTime = document.getElementById('addTime');
     const subtractTime = document.getElementById('subtractTime');
-    let timerCompleteSound = new Audio ("media/timerOver.wav");
+    const minutesTotal = document.getElementById('minutesTotal');
+    let timerCompleteSound = new Audio("media/timerOver.wav");
     let minutes = 20;
     let seconds = 0;
     let selectedMinutes = minutes;
     let paused = false;
     let started = false;
+
+    // reads the stored total time studied from the database
+    let url = "server/timer.php?selectedMinutes=";
+    fetch(url)
+        .then(response => response.text())
+        .then(retrieveTotal)
+
+    // updates the total time studied counter
+    function updateTotal(text) {
+        minutesTotal.innerHTML = "Total Minutes Studied: " + text;
+    }
+
+    // only reads the total time from DB, used on page load
+    function retrieveTotal(text) {
+        minutesTotal.innerHTML = "Total Minutes Studied: " + text;
+    }
 
     /**
      * Starts timer and keeps track of time
@@ -25,13 +42,18 @@ window.addEventListener("load", function (event) {
      * @param {}
      * @returns
      */
-    function start_timer(){
+    function start_timer() {
         timer_interval = setInterval(function () {
 
             // time is up, reset timer to previously selected time and offer feedback
             if (minutes === 0 && seconds === 0) {
                 clearInterval(timer_interval);
                 started = false;
+                // fetch
+                let url = "server/timer.php?selectedMinutes=" + selectedMinutes;
+                fetch(url)
+                    .then(response => response.text())
+                    .then(updateTotal)
                 minutes = selectedMinutes;
                 timer.innerHTML = minutes + ":" + "0" + seconds;
                 timerStart.setAttribute("value", "Start");
@@ -51,14 +73,14 @@ window.addEventListener("load", function (event) {
             } else {
                 timer.innerHTML = minutes + ":" + seconds;
             }
-            
+
             seconds -= 1;
 
-        }, 1000)
+        }, 100)
     }
 
     addTime.addEventListener("click", function (event) {
-        if (started === false && minutes <= 120){
+        if (started === false && minutes <= 120) {
             minutes += 1;
             selectedMinutes = minutes;
             timer.innerHTML = minutes + ":" + "0" + seconds;
@@ -66,7 +88,7 @@ window.addEventListener("load", function (event) {
     });
 
     subtractTime.addEventListener("click", function (event) {
-        if (started === false && minutes > 1){
+        if (started === false && minutes > 1) {
             minutes -= 1;
             selectedMinutes = minutes;
             timer.innerHTML = minutes + ":" + "0" + seconds;
