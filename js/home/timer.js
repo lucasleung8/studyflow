@@ -23,7 +23,6 @@ window.addEventListener("load", function (event) {
     let totalMinutes = minutes;
     let paused = false;
     let started = false;
-    let buttonFeedback;
 
     // event handler to ask user if they actually want to leave mid-session
     const beforeUnloadHandler = (event) => {
