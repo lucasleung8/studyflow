@@ -18,6 +18,7 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/calendar.css">
     <link rel="stylesheet" href="css/tasks.css">
+    <link rel="stylesheet" href="css/charts.css">
     <link rel="stylesheet" href="css/events.css">
     <link rel="stylesheet" href="css/timer.css">
     <script src="
@@ -107,16 +108,20 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
     </div>
 
 
-    
+
 
     <div id="chartContainer" class="container">
+        <div id="chartNav">
+        <button class="chartButton"><</button>
+        <button class="chartButton">></button>
+        </div>
         <canvas id="chart"></canvas>
     </div>
     <div id="timerContainer" class="container">
         <div id="timerHeader">
             <h2>Start a Study Session:</h2>
         </div>
-            <h3 id="timer">20:00</h3>
+        <h3 id="timer">20:00</h3>
         <div id="timerButtons">
             <button class="timerButton" id="subtractTime">-</button>
             <input id="timerStart" class="button" type="submit" value="Start">
