@@ -76,7 +76,7 @@ window.addEventListener("load", function (event) {
 
             seconds -= 1;
 
-        }, 100)
+        }, 1000)
     }
 
     addTime.addEventListener("click", function (event) {
