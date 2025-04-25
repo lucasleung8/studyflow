@@ -16,12 +16,16 @@ window.addEventListener("load", function (event) {
     let timerCompleteSound = new Audio("media/timerOver.wav");
     let minutes = 20;
     let seconds = 0;
-    let selectedMinutes = minutes;
+    // time the user chooses before starting the timer
+    let chosenMinutes = minutes;
+    // running total of how long the study session took, including adjustments
+    let totalMinutes = minutes;
     let paused = false;
     let started = false;
+    let buttonFeedback;
 
-    // reads the stored total time studied from the database
-    let url = "server/timer.php?selectedMinutes=";
+    // reads the stored total time studied from database on page load
+    let url = "server/timer.php?totalMinutes=";
     fetch(url)
         .then(response => response.text())
         .then(retrieveTotal)
@@ -50,11 +54,12 @@ window.addEventListener("load", function (event) {
                 clearInterval(timer_interval);
                 started = false;
                 // fetch
-                let url = "server/timer.php?selectedMinutes=" + selectedMinutes;
+                let url = "server/timer.php?totalMinutes=" + totalMinutes;
                 fetch(url)
                     .then(response => response.text())
                     .then(updateTotal)
-                minutes = selectedMinutes;
+                minutes = chosenMinutes;
+                totalMinutes = chosenMinutes;
                 timer.innerHTML = minutes + ":" + "0" + seconds;
                 timerStart.setAttribute("value", "Start");
                 addTime.removeAttribute("disabled");
@@ -68,6 +73,7 @@ window.addEventListener("load", function (event) {
                 seconds = 59;
             }
 
+            // display time
             if (seconds.toString().length === 1) {
                 timer.innerHTML = minutes + ":" + "0" + seconds;
             } else {
@@ -82,17 +88,60 @@ window.addEventListener("load", function (event) {
     addTime.addEventListener("click", function (event) {
         if (started === false && minutes <= 120) {
             minutes += 1;
-            selectedMinutes = minutes;
+            chosenMinutes = minutes;
             timer.innerHTML = minutes + ":" + "0" + seconds;
+        } else if (started && minutes < 120) {
+            minutes += 1;
+            totalMinutes += 1;
+            // display new time
+            if (seconds.toString().length === 1) {
+                timer.innerHTML = minutes + ":" + "0" + seconds;
+            } else {
+                timer.innerHTML = minutes + ":" + seconds;
+            }
+        }
+
+        // user feedback
+        if (minutes >= 120){
+            addTime.setAttribute("disabled", "");
+            subtractTime.removeAttribute("disabled");
+        } else if (minutes <= 1){
+            subtractTime.setAttribute("disabled", "");
+            addTime.removeAttribute("disabled");
+        } else {
+            addTime.removeAttribute("disabled");
+            subtractTime.removeAttribute("disabled");
         }
     });
 
     subtractTime.addEventListener("click", function (event) {
         if (started === false && minutes > 1) {
             minutes -= 1;
-            selectedMinutes = minutes;
+            chosenMinutes = minutes;
             timer.innerHTML = minutes + ":" + "0" + seconds;
+        } else if (started && minutes > 1){
+            minutes -= 1;
+            totalMinutes -= 1;
+            // display new time
+            if (seconds.toString().length === 1) {
+                timer.innerHTML = minutes + ":" + "0" + seconds;
+            } else {
+                timer.innerHTML = minutes + ":" + seconds;
+            }
         }
+
+        // user feedback
+        if (minutes >= 120){
+            addTime.setAttribute("disabled", "");
+            subtractTime.removeAttribute("disabled");
+        } else if (minutes <= 1){
+            subtractTime.setAttribute("disabled", "");
+            addTime.removeAttribute("disabled");
+        } else {
+            addTime.removeAttribute("disabled");
+            subtractTime.removeAttribute("disabled");
+        }
+        
     });
 
     // Functionality for the Start/Pause button
@@ -112,9 +161,8 @@ window.addEventListener("load", function (event) {
         // user starts timer for first time
         if (started === false) {
             started = true;
+            totalMinutes = chosenMinutes;
             timerStart.setAttribute("value", "Pause");
-            addTime.setAttribute("disabled", "");
-            subtractTime.setAttribute("disabled", "");
             start_timer();
         }
 
