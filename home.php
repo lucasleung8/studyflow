@@ -110,10 +110,6 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
 
 
     <div id="chartContainer" class="container">
-        <div id="chartNav">
-        <button class="chartButton"><</button>
-        <button class="chartButton">></button>
-        </div>
         <canvas id="chart"></canvas>
     </div>
     <div id="timerContainer" class="container">
