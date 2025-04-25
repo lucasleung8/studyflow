@@ -18,7 +18,7 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/calendar.css">
     <link rel="stylesheet" href="css/tasks.css">
-    <link rel="stylesheet" href="css/events.css">
+    <link rel="stylesheet" href="css/calendarTasks.css">
     <link rel="stylesheet" href="css/timer.css">
     <script src="
     https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js
@@ -157,7 +157,7 @@ Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
         <div id="eventHeader">
             <p id="eventDate">Month Day, Year</p>
         </div>
-        <div id="eventItems"></div>
+        <div id="dateTaskList"></div>
     </div>
 </body>
 

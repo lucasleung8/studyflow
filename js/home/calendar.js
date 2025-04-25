@@ -2,7 +2,7 @@
 Names: Raymond, Aiden, Lucas Leung
 Student Numbers:
 Date Created: April 2, 2025
-Description: Studyflow, a productivity tool that helps students transitioning to university with managing their tasks.
+Description: JS file for calendar related code
 Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
 */
 
@@ -19,7 +19,7 @@ window.addEventListener("load", function (event) {
     let allDays = document.getElementById("calendarDates");
     let displayMonth = document.getElementById("displayMonth");
     let eventDate = document.getElementById("eventDate");
-    let eventItems = document.getElementById("eventItems");
+    let dateTaskList = document.getElementById("dateTaskList");
 
     //Month navigation buttons
     let prevMonth = document.getElementById("prevMonth");
@@ -32,9 +32,30 @@ window.addEventListener("load", function (event) {
     let themeSwitch = document.getElementById("themeSwitch");
     themeSwitch.addEventListener("click", () => switchTheme());
 
+    //View another day
+
     //Change selected date to current date
     eventDate.innerHTML = `${months[month]} ${date.getDate()}, ${year}`;
-    selectedDay = `${year}-${month}-${date.getDate()}`;
+    selectedDay = `${year}-${month+1}-${date.getDate()}`;
+
+    //Get User ID
+    let userID;
+    fetch("server/getUserID.php", {
+        method: "GET",
+        credentials: "include",
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.status === "ok") {
+                userID = data.userID;
+                loadDateTasks();
+            } else {
+                console.error("Failed to fetch userID:", data.message);
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching userID:", error);
+        });
 
     //Generate starting calendar
     generateCalendar();
@@ -122,9 +143,10 @@ window.addEventListener("load", function (event) {
             }
             let clickedDay = event.target;
             clickedDay.classList.add("selectedDate");
-            selectedDay = `${year}-${month}-${clickedDay.textContent}`;
+            selectedDay = `${year}-${month+1}-${clickedDay.textContent}`;
+            console.log("Selected date:", selectedDay);
             eventDate.innerHTML = `${months[month]} ${clickedDay.textContent}, ${year}`;
-            displayEvents();
+            loadDateTasks();
         }));
     }
 
@@ -155,18 +177,48 @@ window.addEventListener("load", function (event) {
         generateCalendar();
     }
 
+    function loadDateTasks() {
+        fetch(`server/calendarTasks.php?userid=${userID}&date=${selectedDay}`)
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.status === "ok") {
+                    const sortedTasks = data.tasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate)); // Sort by priority (descending)
+                    displayDateTasks(sortedTasks);
+                } else {    
+                    dateTaskList.innerHTML = `<p>Error: ${data.message}</p>`;
+                }
+            })
+            .catch((error) => {
+                console.error("Error loading tasks:", error);
+                dateTaskList.innerHTML = "<p>Failed to load tasks.</p>";
+            });
+    }
+
     /**
      * Displays events for the selected date
      */
-    function displayEvents() {
-        eventItems.innerHTML = "";
-        if (eventsPerDay[selectedDay]) {
-            for (let event of eventsPerDay[selectedDay]) {
-                let div = document.createElement("div");
-                div.classList.add("eventItem");
-                eventItems.appendChild(div);
-            }
+    function displayDateTasks(tasks) {
+        dateTaskList.innerHTML = "";
+        if (tasks.length === 0) {
+            dateTaskList.innerHTML = `<p>No tasks due this day.</p>`;
+            return;
         }
-    }
 
+        tasks.forEach((task) => {
+            const taskItem = document.createElement("div");
+            taskItem.className = "eventItem";
+        
+            const dueDate = new Date(task.dueDate);
+    
+            taskItem.innerHTML = `
+                <h3>${task.name}</h3>
+                <p>${task.description}</p>
+                <p>Course: ${task.course}</p>
+                <p>Due: ${dueDate.toLocaleString()}</p>
+                <p>Priority: ${["Low", "Medium", "High", "URGENT"][task.priority - 1]}</p>
+                <br>
+            `;
+            dateTaskList.appendChild(taskItem);
+        });
+    }
 });
