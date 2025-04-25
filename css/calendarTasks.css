@@ -11,5 +11,10 @@
 
 .eventItem {
     color: var(--font-color);
-    margin: 5px;
+}
+
+#dateTaskList {
+    padding: 10px;
+    padding-bottom: 5px;
+    color: var(--font-color);
 }
