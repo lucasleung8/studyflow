@@ -10,6 +10,7 @@ window.addEventListener("load", function (event) {
     // Declare timer variables
     let timer = document.getElementById('timer');
     const timerStart = document.getElementById('timerStart');
+    const timerStop = document.getElementById('timerStop');
     const addTime = document.getElementById('addTime');
     const subtractTime = document.getElementById('subtractTime');
     const minutesTotal = document.getElementById('minutesTotal');
@@ -24,6 +25,15 @@ window.addEventListener("load", function (event) {
     let started = false;
     let buttonFeedback;
 
+    // event handler to ask user if they actually want to leave mid-session
+    const beforeUnloadHandler = (event) => {
+        event.preventDefault();
+        event.returnValue = true;
+      };
+
+    // prevent duplicate event handlers
+    window.removeEventListener("beforeunload", beforeUnloadHandler);
+
     // reads the stored total time studied from database on page load
     let url = "server/timer.php?totalMinutes=";
     fetch(url)
@@ -35,7 +45,7 @@ window.addEventListener("load", function (event) {
         minutesTotal.innerHTML = "Total Minutes Studied: " + text;
     }
 
-    // only reads the total time from DB, used on page load
+    // just reads the total time from DB, used on page load
     function retrieveTotal(text) {
         minutesTotal.innerHTML = "Total Minutes Studied: " + text;
     }
@@ -46,14 +56,14 @@ window.addEventListener("load", function (event) {
      * @param {}
      * @returns
      */
-    function start_timer() {
+    function startTimer() {
         timer_interval = setInterval(function () {
 
             // time is up, reset timer to previously selected time and offer feedback
             if (minutes === 0 && seconds === 0) {
                 clearInterval(timer_interval);
                 started = false;
-                // fetch
+                // update and return total time on DB
                 let url = "server/timer.php?totalMinutes=" + totalMinutes;
                 fetch(url)
                     .then(response => response.text())
@@ -64,6 +74,8 @@ window.addEventListener("load", function (event) {
                 timerStart.setAttribute("value", "Start");
                 addTime.removeAttribute("disabled");
                 subtractTime.removeAttribute("disabled");
+                timerStop.style.display = "none";
+                window.removeEventListener("beforeunload", beforeUnloadHandler);
                 timerCompleteSound.play();
                 return;
             }
@@ -148,10 +160,10 @@ window.addEventListener("load", function (event) {
     timerStart.addEventListener("click", function (event) {
         // user unpauses timer
         if (paused) {
-            start_timer();
+            startTimer();
             paused = false;
             timerStart.setAttribute("value", "Pause");
-            // user pauses timer after starting it
+        // user pauses timer after starting it
         } else if (paused === false && started === true) {
             clearInterval(timer_interval);
             paused = true;
@@ -163,8 +175,18 @@ window.addEventListener("load", function (event) {
             started = true;
             totalMinutes = chosenMinutes;
             timerStart.setAttribute("value", "Pause");
-            start_timer();
+            timerStop.style.display = "block";
+            window.addEventListener("beforeunload", beforeUnloadHandler);
+            startTimer();
         }
 
+    });
+
+    timerStop.addEventListener("click", function(event) {
+        if (started) {
+            minutes = 0;
+            seconds = 0;
+            totalMinutes = 0;
+        }
     });
 });
