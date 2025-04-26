@@ -1,11 +1,11 @@
 <?php
 /**
-* Names: Raymond, Aiden, Lucas Leung
-* Student Numbers:
-* Date Created: April 2, 2025
-* Description: Studyflow, a productivity tool that helps students transitioning to university with managing their tasks.
-* Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
- */
+ * Name: Aiden Ly
+ * Student Number: 400570383
+ * Date Created: April 2, 2025
+ * Description: Handles the creation of new tasks in the database.
+*/
+
 include "connect.php";
 
 $name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
@@ -17,6 +17,17 @@ $user_id = filter_input(INPUT_POST, "userid", FILTER_VALIDATE_INT);
 
 $duedate_valid = DateTime::createFromFormat('Y-m-d\TH:i', $duedate) !== false;
 
+/**
+ * Validates the input fields for creating a task.
+ *
+ * @param {String} name - The name of the task.
+ * @param {String} description - A description of the task.
+ * @param {String} course - The course associated with the task.
+ * @param {String} duedate - The due date of the task in YYYY-MM-DDTHH:MM format.
+ * @param {Int} priority - The priority level of the task (1-4).
+ * @param {Int} user_id - The ID of the user creating the task.
+ * @returns JSON response indicating success or failure.
+ */
 if (empty($name) || empty($description) || empty($course) || !$duedate_valid || $priority === null || $user_id === null) {
     header('Content-Type: application/json');
     echo json_encode(["error" => "Invalid input"]);
