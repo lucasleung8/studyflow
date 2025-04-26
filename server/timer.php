@@ -1,15 +1,12 @@
 <?php
 
 /**
- * Names: Raymond, Aiden, Lucas Leung
- * Student Numbers:
+ * Names: Lucas Leung
+ * Student Number: 400582219
  * Date Created: April 2, 2025
- * Description: Studyflow, a productivity tool that helps students transitioning to university with managing their tasks.
- * Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
+ * Description: Updates the total minutes associated with the user when they use the timer
  */
 
-// TODO implement sanitization and error checking to ensure session is active
-// TODO implement json to display errors with greater detail
 session_start();
 include "connect.php";
 // header('Content-Type: application/json');

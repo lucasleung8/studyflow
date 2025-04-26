@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-Names: Raymond, Lucas, Aiden
+Names: Raymond, Aiden, Lucas
 Student Numbers: 400556509, 400570383, 400582219
 Date Created: March 30, 2025
 Description: Home page for when you sign in. Has a task list/creator, statistics for completed tasks
