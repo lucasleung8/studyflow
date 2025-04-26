@@ -36,5 +36,5 @@ if (isset($_SESSION['userID'])) {
         echo ($storedMinutes);
     }
 } else {
-    echo ("ERROR Logged Out");
+    echo ("ERROR User not logged in");
 }
