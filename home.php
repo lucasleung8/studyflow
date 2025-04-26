@@ -1,11 +1,10 @@
 <!doctype html>
-
 <!--
 Names: Raymond, Lucas, Aiden
-Student Numbers: 
+Student Numbers: 400556509, 400570383, 400582219
 Date Created: March 30, 2025
-Description: Studyflow, a productivity tool that helps students transitioning to university with managing their tasks.
-Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
+Description: Home page for when you sign in. Has a task list/creator, statistics for completed tasks
+timer, calendar to view tasks, and dark mode.
 -->
 <html>
 

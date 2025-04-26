@@ -1,3 +1,10 @@
+/*
+ * Name: Aiden Ly
+ * Student Number: 400570383
+ * Date Created: April 2, 2025
+ * Description: Manages task-related functionality, including creating, editing, deleting, and displaying tasks.
+ */
+
 window.addEventListener("load", function () {
     let userID;
     const taskList = document.getElementById("tasklist");
@@ -8,11 +15,13 @@ window.addEventListener("load", function () {
     const taskSubmitButton = document.getElementById("taskSubmit");
     const completedTab = document.getElementById("completedTab");
     const ongoingTab = document.getElementById("ongoingTab");
-    const editTaskSubmitButton = document.getElementById("editTaskSubmit");
     let currentTab = "ongoing";
 
     ongoingTab.classList.add("activeTab");
 
+    /**
+     * Fetches the user ID from the server.
+     */
     fetch("server/getUserID.php", {
         method: "GET",
         credentials: "include",
@@ -30,11 +39,21 @@ window.addEventListener("load", function () {
             console.error("Error fetching userID:", error);
         });
 
+    /**
+     * Displays a popup.
+     *
+     * @param {HTMLElement} popup - The popup element to display.
+     */
     function showPopup(popup) {
         popup.style.display = "flex";
         overlay.style.display = "block";
     }
 
+    /**
+     * Hides a popup.
+     *
+     * @param {HTMLElement} popup - The popup element to hide.
+     */
     function hidePopup(popup) {
         popup.style.display = "none";
         overlay.style.display = "none";
@@ -49,6 +68,9 @@ window.addEventListener("load", function () {
         hidePopup(editTaskPopup);
     });
 
+    /**
+     * Submits a new task to the server.
+     */
     taskSubmitButton.addEventListener("click", (event) => {
         event.preventDefault();
         const name = document.getElementById("taskName").value;
@@ -91,12 +113,17 @@ window.addEventListener("load", function () {
             });
     });
 
+    /**
+     * Loads tasks from the server.
+     *
+     * @param {Boolean} completed - Whether to load completed tasks (true) or ongoing tasks (false).
+     */
     function loadTasks(completed = false) {
         fetch(`server/getTasks.php?userid=${userID}&completed=${completed}`)
             .then((response) => response.json())
             .then((data) => {
                 if (data.status === "ok") {
-                    const sortedTasks = data.tasks.sort((a, b) => b.priority - a.priority); // Sort by priority (descending)
+                    const sortedTasks = data.tasks.sort((a, b) => b.priority - a.priority);
                     displayTasks(sortedTasks, completed);
                 } else {
                     taskList.innerHTML = `<p>Error: ${data.message}</p>`;
@@ -108,31 +135,37 @@ window.addEventListener("load", function () {
             });
     }
 
+    /**
+     * Displays tasks in the task list.
+     *
+     * @param {Array} tasks - The list of tasks to display.
+     * @param {Boolean} completed - Whether the tasks are completed.
+     */
     function displayTasks(tasks, completed) {
         taskList.innerHTML = "";
         if (tasks.length === 0) {
             taskList.innerHTML = `<p>No ${completed ? "completed" : "ongoing"} tasks available.</p>`;
             return;
         }
-    
+
         tasks.forEach((task) => {
             const taskItem = document.createElement("div");
             taskItem.className = "taskItem";
-    
+
             let completedTime = "";
             if (task.completed && task.completedDate) {
                 const serverDate = new Date(task.completedDate);
                 const estDate = new Date(serverDate.getTime() - 6 * 60 * 60 * 1000);
                 completedTime = `<p>Completed on: ${estDate.toLocaleString("en-US", { timeZone: "America/New_York" })}</p>`;
             }
-    
+
             const dueDate = new Date(task.dueDate);
             const isOverdue = !task.completed && dueDate < new Date();
-    
+
             if (isOverdue) {
                 taskItem.style.backgroundColor = "#FFCCCB";
             }
-    
+
             taskItem.innerHTML = `
                 <h3>${task.name}</h3>
                 <p>${task.description}</p>
@@ -152,47 +185,47 @@ window.addEventListener("load", function () {
                 </div>
             `;
             taskList.appendChild(taskItem);
-    
+
             if (!task.completed) {
                 taskItem.querySelector(".editTaskButton").addEventListener("click", () => openEditPopup(task));
                 taskItem.querySelector(".completeTaskButton").addEventListener("click", () => updateTaskCompletion(task.taskID, true));
             }
-    
+
             taskItem.querySelector(".deleteTaskButton").addEventListener("click", () => deleteTask(task.taskID));
         });
     }
 
+    /**
+     * Opens the edit task popup and populates it with task details.
+     *
+     * @param {Object} task - The task to edit.
+     */
     function openEditPopup(task) {
-        const editTaskPopup = document.getElementById("editTaskPopup");
-        const overlay = document.getElementById("overlay");
-    
         document.getElementById("editTaskName").value = task.name;
         document.getElementById("editTaskDesc").value = task.description;
         document.getElementById("editCourse").value = task.course;
         document.getElementById("editDueDate").value = task.dueDate;
         document.getElementById("editPriority").value = task.priority;
-    
-        editTaskPopup.style.display = "flex";
-        overlay.style.display = "block";
-    
+
+        showPopup(editTaskPopup);
+
         const editTaskSubmitButton = document.getElementById("editTaskSubmit");
         editTaskSubmitButton.onclick = function (event) {
             event.preventDefault();
-    
+
             const updatedName = document.getElementById("editTaskName").value;
             const updatedDescription = document.getElementById("editTaskDesc").value;
             const updatedCourse = document.getElementById("editCourse").value;
             const updatedDueDate = document.getElementById("editDueDate").value;
             const updatedPriority = document.getElementById("editPriority").value;
-    
-            // Send the updated task data to the server
+
             fetch("server/updateTask.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: `task_id=${task.taskID}&name=${encodeURIComponent(updatedName)}&description=${encodeURIComponent(updatedDescription)}&course=${encodeURIComponent(updatedCourse)}&duedate=${encodeURIComponent(updatedDueDate)}&priority=${updatedPriority}`
             })
-                .then(response => response.json())
-                .then(data => {
+                .then((response) => response.json())
+                .then((data) => {
                     if (data.status === "ok") {
                         hidePopup(editTaskPopup);
                         loadTasks(currentTab === "completed");
@@ -200,68 +233,67 @@ window.addEventListener("load", function () {
                         alert("Failed to update task: " + data.message);
                     }
                 })
-                .catch(error => console.error("Error updating task:", error));
+                .catch((error) => console.error("Error updating task:", error));
         };
     }
 
+    /**
+     * Deletes a task from the server.
+     *
+     * @param {Number} taskID - The ID of the task to delete.
+     */
     function deleteTask(taskID) {
         fetch("server/deleteTask.php", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: `task_id=${taskID}`
         })
-            .then(response => response.json())
-            .then(data => {
+            .then((response) => response.json())
+            .then((data) => {
                 if (data.status === "ok") {
                     loadTasks(currentTab === "completed");
                 } else {
                     console.error("Failed to delete task:", data.message);
                 }
             })
-            .catch(error => console.error("Error deleting task:", error));
+            .catch((error) => console.error("Error deleting task:", error));
     }
 
+    /**
+     * Updates the completion status of a task.
+     *
+     * @param {Number} taskID - The ID of the task to update.
+     * @param {Boolean} completed - Whether the task is completed.
+     */
     function updateTaskCompletion(taskID, completed) {
         fetch("server/updateTask.php", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: `task_id=${taskID}&completed=${completed}`
         })
-            .then(response => response.json())
-            .then(data => {
+            .then((response) => response.json())
+            .then((data) => {
                 if (data.status === "ok") {
                     loadTasks(currentTab === "completed");
-                    if (completed) {
-                        const dayIndex = new Date().getDay();
-                        updateChart(dayIndex);
-                    }
                 } else {
                     alert("Failed to update task: " + data.message);
                 }
             })
-            .catch(error => console.error("Error updating task:", error));
-    }
-
-    function updateChart(completed) {
-        if (completed) {
-            const dayIndex = new Date().getDay();
-            chart.data.datasets[0].data[dayIndex]++;
-            chart.update();
-        }
+            .catch((error) => console.error("Error updating task:", error));
     }
 
     ongoingTab.addEventListener("click", () => {
         currentTab = "ongoing";
         loadTasks(false);
-    
+
         ongoingTab.classList.add("activeTab");
         completedTab.classList.remove("activeTab");
     });
-    
+
     completedTab.addEventListener("click", () => {
         currentTab = "completed";
         loadTasks(true);
-    
+
         completedTab.classList.add("activeTab");
         ongoingTab.classList.remove("activeTab");
     });
