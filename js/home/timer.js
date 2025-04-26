@@ -32,7 +32,7 @@ window.addEventListener("load", function (event) {
     window.removeEventListener("beforeunload", beforeUnloadHandler);
 
     // Reads the stored total time studied from database on page load without actually affecting the total
-    let url = "server/timer.php?totalMinutes=readOnly";
+    let url = "server/timer.php?totalMinutes=0";
     fetch(url)
         .then(response => response.text())
         .then(updateTotal)
