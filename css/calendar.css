@@ -1,3 +1,10 @@
+/*
+Names: Raymond Zhong
+Student Numbers: 400556509
+Date Created: April 2, 2025
+Description: CSS file for the calendar
+*/
+
 #calendarHeader {
     display: flex;
     align-items: center;

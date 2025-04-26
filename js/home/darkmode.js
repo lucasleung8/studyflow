@@ -1,3 +1,10 @@
+/*
+Names: Raymond Zhong
+Student Numbers: 400556509
+Date Created: April 22, 2025
+Description: JS file for dark/light mode related code
+*/
+
 window.addEventListener("load", function (event) {
     //Dark/Light mode button
     let themeSwitch = document.getElementById("themeSwitch");
@@ -10,7 +17,7 @@ window.addEventListener("load", function (event) {
     }
 
     /**
-     * Switches theme to either light/dark
+     * Switches theme to either light/dark and saves that in local storage
      */
     function switchTheme() {
         if (document.body.classList.contains("darkmode")) {

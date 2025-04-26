@@ -1,9 +1,8 @@
 /*
-Names: Raymond Zhong, Aiden Ly, Lucas Leung
-Student Numbers: 400556509, 
+Names: Raymond Zhong
+Student Numbers: 400556509
 Date Created: April 2, 2025
 Description: JS file for calendar related code
-Created by Raymond, Aiden, and Lucas for COMPSCI 1XD3 at McMaster University.
 */
 
 window.addEventListener("load", function (event) {
