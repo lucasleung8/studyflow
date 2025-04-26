@@ -23,7 +23,7 @@ if (isset($_SESSION['userID'])) {
     $storedMinutes = $row["minutesTotal"];
 
     // Return the minutes stored in the database without updating it, when AJAX call only needs to retrieve from the DB
-    if ($totalMinutes === "readOnly"){
+    if ($totalMinutes === "readOnly") {
         echo ($storedMinutes);
     } else if ($totalMinutes === null || $totalMinutes === false) {
         echo ("ERROR Incorrect Parameter");

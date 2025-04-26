@@ -71,7 +71,6 @@ timer, calendar to view tasks, and dark mode.
     </div>
 
     <div id="overlay"></div>
-
     <div class="taskFormContainer container" id="taskPopup">
         <div id="createTask">
             <h2 id="createTaskHeader">Create Task</h2>
@@ -105,15 +104,7 @@ timer, calendar to view tasks, and dark mode.
         <span id="editTaskFeedback"></span>
         <input id="editTaskSubmit" class="taskButton button" type="submit" value="Save Changes">
     </div>
-
-
-
-
     <div id="chartContainer" class="container">
-        <div id="chartNav">
-        <button class="chartButton"><</button>
-        <button class="chartButton">></button>
-        </div>
         <canvas id="chart"></canvas>
     </div>
     <div id="timerContainer" class="container">

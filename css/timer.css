@@ -52,7 +52,7 @@ Description: CSS file to style the timer
     cursor: not-allowed;
 }
 
-#timerHeader h2{
+#timerHeader h2 {
     font-weight: 500;
     font-size: 20px;
 }
