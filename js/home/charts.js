@@ -36,6 +36,13 @@ window.addEventListener("load", function () {
     });
 });
 
+
+/**
+* Updates the total time studied label
+* 
+* @param {int} dayIndex 
+* @returns
+*/
 function updateChart(dayIndex) {
     if (!chart) {
         return;

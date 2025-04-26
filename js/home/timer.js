@@ -6,7 +6,6 @@ Description: Javascript to allow the timer to function and be adjustable
 */
 
 window.addEventListener("load", function (event) {
-    // Declare timer variables
     let timer = document.getElementById('timer');
     const timerStart = document.getElementById('timerStart');
     const timerStop = document.getElementById('timerStop');
@@ -16,35 +15,35 @@ window.addEventListener("load", function (event) {
     let timerCompleteSound = new Audio("media/timerOver.wav");
     let minutes = 20;
     let seconds = 0;
-    // time the user chooses before starting the timer
+    // User's set time before starting the timer
     let chosenMinutes = minutes;
-    // running total of how long the study session took, including adjustments
+    // Running total of how long the study session took, including adjustments
     let totalMinutes = minutes;
     let paused = false;
     let started = false;
 
-    // event handler to ask user if they actually want to leave mid-session
+    // Event handler to ask user if they actually want to leave mid-session
     const beforeUnloadHandler = (event) => {
         event.preventDefault();
         event.returnValue = true;
       };
 
-    // prevent duplicate event handlers
+    // Prevent duplicate beforeunload event handlers
     window.removeEventListener("beforeunload", beforeUnloadHandler);
 
-    // reads the stored total time studied from database on page load
-    let url = "server/timer.php?totalMinutes=";
+    // Reads the stored total time studied from database on page load without actually affecting the total
+    let url = "server/timer.php?totalMinutes=readOnly";
     fetch(url)
         .then(response => response.text())
-        .then(retrieveTotal)
+        .then(updateTotal)
 
-    // updates the total time studied counter
+    /**
+     * Updates the total time studied label
+     * 
+     * @param {text} text 
+     * @returns
+     */
     function updateTotal(text) {
-        minutesTotal.innerHTML = "Total Minutes Studied: " + text;
-    }
-
-    // just reads the total time from DB, used on page load
-    function retrieveTotal(text) {
         minutesTotal.innerHTML = "Total Minutes Studied: " + text;
     }
 
@@ -57,11 +56,11 @@ window.addEventListener("load", function (event) {
     function startTimer() {
         timer_interval = setInterval(function () {
 
-            // time is up, reset timer to previously selected time and offer feedback
+            // Time is up, reset timer to the time that was initially set
             if (minutes === 0 && seconds === 0) {
                 clearInterval(timer_interval);
                 started = false;
-                // update and return total time on DB
+                // Update and return total time on DB
                 let url = "server/timer.php?totalMinutes=" + totalMinutes;
                 fetch(url)
                     .then(response => response.text())
@@ -83,7 +82,7 @@ window.addEventListener("load", function (event) {
                 seconds = 59;
             }
 
-            // display time
+            // Display time
             if (seconds.toString().length === 1) {
                 timer.innerHTML = minutes + ":" + "0" + seconds;
             } else {
@@ -103,7 +102,7 @@ window.addEventListener("load", function (event) {
         } else if (started && minutes < 120) {
             minutes += 1;
             totalMinutes += 1;
-            // display new time
+            // Display seconds properly without visual glitch
             if (seconds.toString().length === 1) {
                 timer.innerHTML = minutes + ":" + "0" + seconds;
             } else {
@@ -111,7 +110,7 @@ window.addEventListener("load", function (event) {
             }
         }
 
-        // user feedback
+        // Provide user feedback for timer buttons
         if (minutes >= 120){
             addTime.setAttribute("disabled", "");
             subtractTime.removeAttribute("disabled");
@@ -132,7 +131,7 @@ window.addEventListener("load", function (event) {
         } else if (started && minutes > 1){
             minutes -= 1;
             totalMinutes -= 1;
-            // display new time
+            // Display seconds properly without visual glitch
             if (seconds.toString().length === 1) {
                 timer.innerHTML = minutes + ":" + "0" + seconds;
             } else {
@@ -140,7 +139,7 @@ window.addEventListener("load", function (event) {
             }
         }
 
-        // user feedback
+        // Provide user feedback for timer buttons
         if (minutes >= 120){
             addTime.setAttribute("disabled", "");
             subtractTime.removeAttribute("disabled");
@@ -154,21 +153,21 @@ window.addEventListener("load", function (event) {
         
     });
 
-    // Functionality for the Start/Pause button
+    // Functionality for Start/Pause button
     timerStart.addEventListener("click", function (event) {
-        // user unpauses timer
+        // User unpauses timer
         if (paused) {
             startTimer();
             paused = false;
             timerStart.setAttribute("value", "Pause");
-        // user pauses timer after starting it
+        // User pauses timer after starting it
         } else if (paused === false && started === true) {
             clearInterval(timer_interval);
             paused = true;
             timerStart.setAttribute("value", "Start");
         }
 
-        // user starts timer for first time
+        // User starts timer for first time
         if (started === false) {
             started = true;
             totalMinutes = chosenMinutes;
@@ -177,9 +176,9 @@ window.addEventListener("load", function (event) {
             window.addEventListener("beforeunload", beforeUnloadHandler);
             startTimer();
         }
-
     });
 
+    // Reset time when user presses stop
     timerStop.addEventListener("click", function(event) {
         if (started) {
             minutes = 0;
