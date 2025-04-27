@@ -16,8 +16,11 @@ window.addEventListener("load", function () {
     const completedTab = document.getElementById("completedTab");
     const ongoingTab = document.getElementById("ongoingTab");
     let currentTab = "ongoing";
-
     ongoingTab.classList.add("activeTab");
+    // Chart variables
+    let chart;
+    let dataset = [0, 0, 0, 0, 0, 0, 0];
+    const ctx = document.getElementById('chart');
 
     /**
      * Fetches the user ID from the server.
@@ -175,12 +178,11 @@ window.addEventListener("load", function () {
                 ${completedTime}
                 ${isOverdue ? `<p style="color: white; font-weight: bold;">Overdue!</p>` : ""}
                 <div class="taskActions">
-                    ${
-                        !task.completed
-                            ? `<button class="editTaskButton taskButton" data-task-id="${task.taskID}">Edit</button>
+                    ${!task.completed
+                    ? `<button class="editTaskButton taskButton" data-task-id="${task.taskID}">Edit</button>
                             <button class="completeTaskButton taskButton" data-task-id="${task.taskID}">Complete</button>`
-                            : ""
-                    }
+                    : ""
+                }
                     <button class="deleteTaskButton taskButton" data-task-id="${task.taskID}">Delete</button>
                 </div>
             `;
@@ -234,6 +236,12 @@ window.addEventListener("load", function () {
                     }
                 })
                 .catch((error) => console.error("Error updating task:", error));
+
+            // Retrieve number of completed tasks per day based on dates of completed tasks in DB
+            let url = "server/charts.php";
+            fetch(url)
+                .then(response => response.json())
+                .then(updateChart)
         };
     }
 
@@ -260,6 +268,16 @@ window.addEventListener("load", function () {
     }
 
     /**
+     * Updates the chart with new task completion stats.
+     *
+     * @param {Array} newDataset The new dataset to replace the old with, a 7-element integer array representing tasks completed each day
+     */
+    function updateChart(newDataset) {
+        chart.data.datasets[0].data = newDataset;
+        chart.update();
+    }
+
+    /**
      * Updates the completion status of a task.
      *
      * @param {Number} taskID - The ID of the task to update.
@@ -280,6 +298,11 @@ window.addEventListener("load", function () {
                 }
             })
             .catch((error) => console.error("Error updating task:", error));
+
+        // Update chart data 
+        fetch("server/charts.php")
+            .then(response => response.json())
+            .then(updateChart)
     }
 
     ongoingTab.addEventListener("click", () => {
@@ -299,4 +322,34 @@ window.addEventListener("load", function () {
     });
 
     loadTasks(false);
+
+    // Retrieve data for graph - number of completed tasks per day based on dates of completed tasks in DB
+    let url = "server/charts.php";
+    fetch(url)
+        .then(response => response.json())
+        .then(updateChart)
+
+    // Create the chart
+    chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            datasets: [{
+                label: 'Completed Tasks This Week',
+                data: dataset,
+                borderWidth: 1,
+                fill: false
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            }
+        }
+    });
 });
