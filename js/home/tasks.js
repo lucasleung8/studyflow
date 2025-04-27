@@ -1,8 +1,9 @@
 /*
- * Name: Aiden Ly
- * Student Number: 400570383
+ * Name: Aiden Ly and Lucas Leung
+ * Student Numbers: 400570383, 400582219
  * Date Created: April 2, 2025
- * Description: Manages task-related functionality, including creating, editing, deleting, and displaying tasks.
+ * Description: Manages both task-related functionality, including creating, editing, deleting, displaying tasks, as well as
+ * the chart.
  */
 
 window.addEventListener("load", function () {

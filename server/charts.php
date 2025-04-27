@@ -2,7 +2,7 @@
 
 /**
  * Name: Lucas Leung
- * Student Number:
+ * Student Number: 400582219
  * Date Created: April 26, 2025
  * Description: Retrieves completed tasks for the current week to display onto the chart. 
  * Returns an array containing the number of completed tasks each day of the week, without changing the DB.

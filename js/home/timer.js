@@ -1,8 +1,9 @@
 /*
 Names: Lucas Leung
-Student Numbers: 400582219
+Student Number: 400582219
 Date Created: April 2, 2025
-Description: Javascript to allow the timer to function and be adjustable
+Description: Javascript to keep track of how long the user has studied for via AJAX, allow the timer to function and be adjustable,
+remember the time they set and go back to it after it finishes, and offer feedback if they try quitting the page while the timer is active.
 */
 
 window.addEventListener("load", function (event) {
@@ -28,7 +29,7 @@ window.addEventListener("load", function (event) {
         event.returnValue = true;
       };
 
-    // Prevent duplicate beforeunload event handlers
+    // Prevent duplicate event handlers
     window.removeEventListener("beforeunload", beforeUnloadHandler);
 
     // Reads the stored total time studied from database on page load without actually affecting the total
@@ -40,7 +41,7 @@ window.addEventListener("load", function (event) {
     /**
      * Updates the total time studied label
      * 
-     * @param {text} text 
+     * @param {Int} text 
      * @returns
      */
     function updateTotal(text) {
