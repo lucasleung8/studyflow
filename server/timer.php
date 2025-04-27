@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Name: Lucas Leung
  * Student Number: 400582219
@@ -38,3 +37,4 @@ if (isset($_SESSION['userID'])) {
 } else {
     echo ("ERROR User not logged in");
 }
+?>

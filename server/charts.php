@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Name: Lucas Leung
  * Student Number: 400582219
@@ -34,3 +33,5 @@ try {
 } catch (Exception $e) {
     echo json_encode(["status" => "error", "message" => $e->getMessage()]);
 }
+
+?>
